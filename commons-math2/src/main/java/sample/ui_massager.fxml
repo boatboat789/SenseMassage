@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="531.0" prefWidth="684.0" style="-fx-background-color: #FF6666;" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Massager">
+   <children>
+      <Label layoutX="264.0" layoutY="74.0" text="Massager" textFill="WHITE">
+         <font>
+            <Font name="Bauhaus 93" size="37.0" />
+         </font>
+      </Label>
+      <TableView fx:id="TableView" layoutX="14.0" layoutY="129.0" prefHeight="257.0" prefWidth="658.0" style="-fx-background-color: #FFFFCC;">
+        <columns>
+            <TableColumn fx:id="Check" prefWidth="45.0" style="-fx-background-color: #FFFFFF;" text="Check" />
+          <TableColumn fx:id="Massager_ID" prefWidth="77.0" style="-fx-background-color: #FFFFFF;" text="Massager_ID" />
+          <TableColumn fx:id="Massager_Name" prefWidth="227.0" style="-fx-background-color: #FFFFFF;" text="Massager_Name" />
+            <TableColumn fx:id="Phone" prefWidth="163.0" style="-fx-background-color: #FFFFFF;" text="phone" />
+            <TableColumn fx:id="Status" prefWidth="145.0" style="-fx-background-color: #FFFFFF;" text="Status" />
+        </columns>
+      </TableView>
+      <Label layoutX="14.0" layoutY="409.0" text="Massager_Name :" textFill="WHITE">
+         <font>
+            <Font name="Aharoni Bold" size="15.0" />
+         </font></Label>
+      <Label layoutX="305.0" layoutY="409.0" text="Phone :" textFill="WHITE">
+         <font>
+            <Font name="Aharoni Bold" size="15.0" />
+         </font></Label>
+      <TextField fx:id="text1" layoutX="137.0" layoutY="407.0" />
+      <TextField fx:id="text2" layoutX="369.0" layoutY="407.0" />
+      <Button layoutX="131.0" layoutY="464.0" mnemonicParsing="false" onAction="#actionButtonTest" prefHeight="50.0" prefWidth="96.0" style="-fx-background-color: #FFFFFF;" text="ADD" textFill="#ff6666">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font></Button>
+      <Button layoutX="554.0" layoutY="464.0" mnemonicParsing="false" onAction="#actionToMenu" prefHeight="50.0" prefWidth="96.0" style="-fx-background-color: #FFFFFF;" text="BACK" textFill="#ff6666">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font></Button>
+      <Pane layoutX="-6.0" prefHeight="76.0" prefWidth="690.0" style="-fx-background-color: #FFFFCC;">
+         <children>
+            <Label layoutX="191.0" layoutY="3.0" prefHeight="70.0" prefWidth="308.0" text="๏SenseAroma๏" textFill="#d06868">
+               <font>
+                  <Font name="Aparajita Bold" size="45.0" />
+               </font>
+            </Label>
+            <Label fx:id="labell" layoutX="564.0" layoutY="2.0" prefHeight="24.0" prefWidth="112.0" text="dd/mm/yyyy xx:xx:xx" />
+         </children>
+      </Pane>
+      <Pane layoutY="113.0" prefHeight="10.0" prefWidth="684.0" style="-fx-background-color: #FFFFCC;" />
+      <Button layoutX="369.0" layoutY="464.0" mnemonicParsing="false" onAction="#actionButtonCanceled" prefHeight="50.0" prefWidth="149.0" style="-fx-background-color: #FFFFFF;" text="ACTIVE/UNACTIVE" textFill="#ff6666">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font>
+      </Button>
+      <Button layoutX="257.0" layoutY="464.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="96.0" style="-fx-background-color: #FFFFFF;" text="UPDATE" textFill="#ff6666">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>

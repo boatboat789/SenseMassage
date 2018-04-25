@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="531.0" prefWidth="684.0" style="-fx-background-color: #FF6666;" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ProductPayment">
+   <children>
+      <Label layoutX="215.0" layoutY="70.0" prefHeight="43.0" prefWidth="288.0" text="ProductService" textFill="WHITE">
+         <font>
+            <Font name="Bauhaus 93" size="37.0" />
+         </font>
+      </Label>
+      <TableView fx:id="TableView" layoutX="14.0" layoutY="134.0" prefHeight="200.0" prefWidth="653.0" style="-fx-background-color: #FFFFCC;">
+        <columns>
+            <TableColumn fx:id="Check" prefWidth="45.0" style="-fx-background-color: #FFFFFF;" text="Check" />
+          <TableColumn fx:id="DateTime" prefWidth="68.0" style="-fx-background-color: #FFFFFF;" text="DateTime" />
+            <TableColumn fx:id="MassagerName" prefWidth="127.0" style="-fx-background-color: #FFFFFF;" text="MassagerName" />
+          <TableColumn fx:id="CourseName" prefWidth="130.0" style="-fx-background-color: #FFFFFF;" text="CourseName" />
+            <TableColumn fx:id="Time" prefWidth="88.0" style="-fx-background-color: #FFFFFF;" text="Time" />
+            <TableColumn fx:id="ProductName" prefWidth="121.0" style="-fx-background-color: #FFFFFF;" text="ProductName" />
+            <TableColumn fx:id="Quantity" prefWidth="73.0" style="-fx-background-color: #FFFFFF;" text="Quantity" />
+        </columns>
+      </TableView>
+      <Button fx:id="add" layoutX="278.0" layoutY="461.0" mnemonicParsing="false" onAction="#actionButtonTest" prefHeight="50.0" prefWidth="99.0" style="-fx-background-color: #FFFFFF;" text="CONFIRM" textFill="#ff6666">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font></Button>
+      <Button layoutX="572.0" layoutY="461.0" mnemonicParsing="false" onAction="#actionToMenu" prefHeight="69.0" prefWidth="112.0" style="-fx-background-color: #FFFFFF;" text="BACK" textFill="#ff6666">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font></Button>
+      <Pane prefHeight="70.0" prefWidth="684.0" style="-fx-background-color: #FFFFCC;">
+         <children>
+            <Label layoutX="189.0" layoutY="1.0" prefHeight="69.0" prefWidth="307.0" text="๏SenseAroma๏" textFill="#d06868">
+               <font>
+                  <Font name="Aparajita Bold" size="45.0" />
+               </font>
+            </Label>
+            <Label fx:id="labell" layoutX="566.0" layoutY="2.0" prefHeight="24.0" prefWidth="112.0" text="dd/mm/yyyy xx:xx:xx" />
+         </children>
+      </Pane>
+      <Pane layoutX="-54.0" layoutY="111.0" prefHeight="13.0" prefWidth="737.0" style="-fx-background-color: #FFFFCC;" />
+      <Label fx:id="PricesOut" layoutX="503.0" layoutY="359.0" prefHeight="21.0" prefWidth="99.0" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Aharoni Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="PricesOut1" layoutX="503.0" layoutY="393.0" prefHeight="21.0" prefWidth="99.0" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Aharoni Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="PricesOut2" layoutX="503.0" layoutY="426.0" prefHeight="21.0" prefWidth="99.0" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Aharoni Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="236.0" layoutY="391.0" prefHeight="25.0" prefWidth="70.0" text="Quantity" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Button layoutX="303.0" layoutY="391.0" mnemonicParsing="false" onAction="#add" prefHeight="13.0" prefWidth="24.0" style="-fx-background-color: #FFFFFF;" text="+" textFill="#ff6666">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font>
+      </Button>
+      <Button layoutX="422.0" layoutY="391.0" mnemonicParsing="false" onAction="#substract" prefHeight="21.0" prefWidth="24.0" style="-fx-background-color: #FFFFFF;" text="-" textFill="#ff6666">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font>
+      </Button>
+      <Label fx:id="label" layoutX="358.0" layoutY="391.0" prefHeight="25.0" prefWidth="39.0" text="1" textFill="WHITE">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="add1" layoutY="461.0" mnemonicParsing="false" onAction="#actionButtonCLEAR" prefHeight="69.0" prefWidth="121.0" style="-fx-background-color: #FFFFFF;" text="CLEAR TABLE" textFill="#ff6666">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font>
+      </Button>
+   </children>
+</Pane>
