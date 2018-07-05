@@ -1,10 +1,7 @@
 package sample;
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -17,23 +14,17 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ResourceBundle;
-
 import javax.swing.JOptionPane;
-
 import Detail.StartWorkDetail;
-
 public class StartWork implements Initializable {
     @FXML
     private Button borrow ;
@@ -56,11 +47,10 @@ public class StartWork implements Initializable {
 	}
 	  @Override
 	public void initialize(URL location, ResourceBundle resources){
-		System.out.println("sss");
 		Massager_ID.setCellValueFactory(new PropertyValueFactory<StartWorkDetail,String>("Massager_ID"));
 		Massager_Name.setCellValueFactory(new PropertyValueFactory<StartWorkDetail,String>("Massager_Name"));
 		TimeIn.setCellValueFactory(new PropertyValueFactory<StartWorkDetail,String>("TimeIn"));
-		TableView.setItems(a.DS6);
+		TableView.setItems(a.DS6Present);
 		combobox1.setItems(a.MassagerD);
 	}
     @FXML
@@ -75,7 +65,6 @@ public class StartWork implements Initializable {
     		 String TimeIn = sdf.format(cal.getTime());
     		 String MassagerName1 = combobox1.getValue();
     		 String Massager_ID = " "  ;
-    		 String TimeOut1 ="";
     		 SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
     		 Calendar cal1 = Calendar.getInstance();
     	   	 String Date = format1.format(cal1.getTime());
@@ -84,24 +73,21 @@ public class StartWork implements Initializable {
 					Massager_ID = a.DS1.get(x).getMassager_ID();
 				}
     		 }
-    		 for(int i = 0; i < a.DS6.size();i++){
-    			 if(a.DS6.get(i).getMassager_Name().equals(MassagerName1)){
+    		 for(int i = 0; i < a.DS6Present.size();i++){
+    			 if(a.DS6Present.get(i).getMassager_Name().equals(MassagerName1)){
     				 check =1;
     			 }
     		 }
-    		 if(check == 0 ){
-    			 a.DS6.add(new StartWorkDetail(Massager_ID, MassagerName1, TimeIn));
-    			 a.insertHistoryWork(Massager_ID, TimeIn, Date);
-    			 TableView.setItems(a.DS6);
+    		 if(check == 0 ){	 
+    			 a.insertHistoryWork(Massager_ID, TimeIn, Date,"Clock In");
+    			 a.getNewSetTableStartWorking();
+    			 TableView.setItems(a.DS6Present);
     			 JOptionPane.showMessageDialog(null,"Check In complete");
     		 }
     		 else if(check==1){
     			  JOptionPane.showMessageDialog(null,"This massager already checkIn");
     		 }
-    		 
-    		
-    		}
-    	 
+    		} 	 
     }
     @FXML
     public void actionButtonOut(ActionEvent event) throws ClassNotFoundException, SQLException{
@@ -112,49 +98,38 @@ public class StartWork implements Initializable {
 	   	else{
 	   		 Calendar cal = Calendar.getInstance();
 	   		 SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-	   		 String TimeIn = sdf.format(cal.getTime());
+	   		 String TimeOut = sdf.format(cal.getTime());
 	   		 String MassagerName1 = combobox1.getValue();
 	   		 String Massager_ID = " "  ;
-	   		 String TimeOut1 ="";
-	   		 SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
-	   		 Calendar cal1 = Calendar.getInstance();
-	   	   	 String Date = format1.format(cal1.getTime());
 	   		 for (int x = 0 ; x< a.DS1.size();x++){
 					if(MassagerName1.equals(a.DS1.get(x).getMassager_Name())){
 						Massager_ID = a.DS1.get(x).getMassager_ID();
 					}
 	   		 }
-	   		 for(int i = 0; i < a.DS6.size();i++){
-	   			 if(a.DS6.get(i).getMassager_Name().equals(MassagerName1)){
+	   		 String TimeIn = "";
+	   		 for(int i = 0; i < a.DS6Present.size();i++){
+	   			 if(a.DS6Present.get(i).getMassager_Name().equals(MassagerName1)){
+	   				 TimeIn= a.DS6Present.get(i).getTimeIn();
 	   				 check =1;
 	   			 }
 	   		 }
 	   		 if(check == 0 ){
 	   			 JOptionPane.showMessageDialog(null,"This massager did not check in");
 	   		 }
-	   		 else if(check==1){
-	   			a.deleteHistoryWork(Massager_ID); 
-    			a.DS6.clear(); 
+	   		 else if(check==1){ 
+	   			a.updateHistoryWork(Massager_ID, "Clock Out",TimeIn,TimeOut);
     			a.getNewSetTableStartWorking();
-    			TableView.setItems(a.DS6);
-    			JOptionPane.showMessageDialog(null,"Check out complete");
-	   			 
-	   		 }
-	   		 
-	   		
+    			TableView.setItems(a.DS6Present);
+    			JOptionPane.showMessageDialog(null,"Check out complete");		 
+	   		 }	 	
    		}
     }
     @FXML
     public void actionToMenu(ActionEvent event){
-    	a.DS6.clear();
         Button b =(Button)event.getSource();
         Stage stage = (Stage) b.getScene().getWindow();
-        //a=textField.getText();
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ui_personnel.fxml"));
-        Parent root = null;
         try {
-
         	stage.setScene(new Scene((Parent) loader.load(),498, 389));
             stage.setTitle("๏SenseAroma๏");
             stage.show();

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="531.0" prefWidth="684.0" style="-fx-background-color: #FF6666;" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Massager">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="531.0" prefWidth="684.0" style="-fx-background-color: #FF6666;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Massager">
    <children>
       <Label layoutX="264.0" layoutY="74.0" text="Massager" textFill="WHITE">
          <font>
@@ -53,12 +53,12 @@
          </children>
       </Pane>
       <Pane layoutY="113.0" prefHeight="10.0" prefWidth="684.0" style="-fx-background-color: #FFFFCC;" />
-      <Button layoutX="369.0" layoutY="464.0" mnemonicParsing="false" onAction="#actionButtonCanceled" prefHeight="50.0" prefWidth="149.0" style="-fx-background-color: #FFFFFF;" text="ACTIVE/UNACTIVE" textFill="#ff6666">
+      <Button layoutX="369.0" layoutY="464.0" mnemonicParsing="false" onAction="#actionButtonCanceled" prefHeight="50.0" prefWidth="149.0" style="-fx-background-color: #FFFFFF;" text="ACTIVE/INACTIVE" textFill="#ff6666">
          <font>
             <Font name="Arial Black" size="12.0" />
          </font>
       </Button>
-      <Button layoutX="257.0" layoutY="464.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="96.0" style="-fx-background-color: #FFFFFF;" text="UPDATE" textFill="#ff6666">
+      <Button layoutX="257.0" layoutY="464.0" mnemonicParsing="false" onAction="#actionButtonUpdate" prefHeight="50.0" prefWidth="96.0" style="-fx-background-color: #FFFFFF;" text="UPDATE" textFill="#ff6666">
          <font>
             <Font name="Arial Black" size="12.0" />
          </font>

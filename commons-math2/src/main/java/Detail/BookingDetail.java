@@ -1,9 +1,7 @@
 package Detail;
-
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
-
 public class BookingDetail {
 	private  BooleanProperty Check;
 	private final SimpleStringProperty No ;
@@ -62,5 +60,8 @@ public class BookingDetail {
 	}
 	public void setStatus() {
 		this.Status = new SimpleStringProperty("CheckIn");	
+	}
+	public void setStatusCancled() {
+		this.Status = new SimpleStringProperty("Cancled");	
 	}
 }

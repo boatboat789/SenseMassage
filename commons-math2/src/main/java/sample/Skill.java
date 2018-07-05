@@ -1,5 +1,4 @@
-	package sample;
-
+package sample;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -8,7 +7,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -20,7 +18,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.layout.VBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ScrollBar;
 import java.io.IOException;
@@ -32,12 +29,8 @@ import java.util.Calendar;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.scene.layout.Priority;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-
 import Detail.MassagerCourseDetail;
-import Detail.PaymentDetail;
 import Detail.SkillDetail;
 import javafx.scene.control.ScrollPane;
 public class Skill implements Initializable {
@@ -53,12 +46,9 @@ public class Skill implements Initializable {
     @FXML  public   TableView<SkillDetail> TableView;
     @FXML  public   TableColumn<SkillDetail,String> Massager_Name;
     @FXML  public   TableColumn<SkillDetail,String> Course_Name;
-  //  public static ObservableList<SkillDetail> list = FXCollections.observableArrayList();
-    public ArrayList<String> x = new ArrayList<>();
     ArrayList<MassagerCourseDetail> getMCSkill = new ArrayList<>();
     public Skill(){
-    	dynamicdate();
-    	
+    	dynamicdate();	
     	listScroll.setValue(100);
     }	
     @Override
@@ -140,8 +130,6 @@ public class Skill implements Initializable {
 						}
 					}	
 				}
-				
-				//Time nameไม่ซ้ำ
 				if(getMCSkill.size()>0) {
 	    			 for(int i = 0 ;i<getMCSkill.size() ;i++) {
 	    				 a.insertSkill(getMCSkill.get(i).getCourse_Id(),getMCSkill.get(i).getMassager_Id());
@@ -152,8 +140,7 @@ public class Skill implements Initializable {
 				}
 				else {
 					JOptionPane.showMessageDialog(null,"Massager already have this skill from your lists");
-				}
-				
+				}	
     	}
     }
     @FXML
@@ -164,16 +151,13 @@ public class Skill implements Initializable {
     private Button logout ;
 	public void  filter() {
 		a.DS5SPECIFIC.clear();
-		System.out.println("hi");
 		List<String> al = new ArrayList<String>();
  		LinkedHashSet<String> lhs = new LinkedHashSet<String>();
 		if(combobox.getValue() == null){
 		}	
 		else {
-			int priceA = 0;
-	 		int count = 0;
+			int count = 0;
 	 		for(int i = 0 ; i<a.DS5CHECKONLY.size();i++){
-	 			System.out.println(a.DS5CHECKONLY.get(i).getMassager_Name()+"   "+a.DS5CHECKONLY.get(i).getCourse_Name());
 	 			if(combobox.getValue().equals(a.DS5CHECKONLY.get(i).getMassager_Name()))
 	 				if(count == 0){
 	 					count =1 ;
@@ -198,7 +182,6 @@ public class Skill implements Initializable {
         //a=textField.getText();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ui_owner.fxml"));
-        Parent root = null;
         try {
 
         	stage.setScene(new Scene((Parent) loader.load(), 498, 455));

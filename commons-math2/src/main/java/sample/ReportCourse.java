@@ -1,20 +1,11 @@
 package sample;
-
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.ResourceBundle;
-
-import javax.swing.JOptionPane;
-
-import Detail.CorseDetail;
 import Detail.CoursePriceHistory;
-import Detail.PaymentDetail;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -35,7 +26,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 public class ReportCourse  implements Initializable {
 	public ConnectDatabase a = new ConnectDatabase();
     @FXML  public Button test;
@@ -45,11 +35,9 @@ public class ReportCourse  implements Initializable {
 	@FXML  public   TableColumn<CoursePriceHistory,String> Time	;
 	@FXML public   TableColumn<CoursePriceHistory,String> 	Price;
 	@FXML public   TableColumn<CoursePriceHistory,String> MassagerCost;
+	@FXML public   TableColumn<CoursePriceHistory,String> Date;
 	public ObservableList<CoursePriceHistory> DS11SPECIFIC = FXCollections.observableArrayList();
 	@FXML public  ComboBox<String> MassagerCB;
-  //  public static ObservableList<PaymentDetail> list = FXCollections.observableArrayList();
-    public ArrayList<String> x = new ArrayList<>();
-   
     public ReportCourse (){
     	dynamicdate();
     } 
@@ -60,11 +48,10 @@ public class ReportCourse  implements Initializable {
     	Time.setCellValueFactory(new PropertyValueFactory<CoursePriceHistory,String>("Time"));
     	Price.setCellValueFactory(new PropertyValueFactory<CoursePriceHistory,String>("Price"));
     	MassagerCost.setCellValueFactory(new PropertyValueFactory<CoursePriceHistory,String>("MassagerCost"));
-		//TableView.setItems(a.DS7);
+    	Date.setCellValueFactory(new PropertyValueFactory<CoursePriceHistory,String>("Date"));
     	 MassagerCB.setItems(a.courseName);
     	 TableView.setItems(a.DS11);
 	}
- 
     @FXML
     private Button borrow ;
     @FXML
@@ -76,12 +63,10 @@ public class ReportCourse  implements Initializable {
 		if(MassagerCB.getValue() == null){
 		}	
 		else {
-			int priceA = 0;
-	 		int count = 0;
-	 		for(int i = 0 ; i<a.DS11.size();i++){
+			for(int i = 0 ; i<a.DS11.size();i++){
 	 			if(MassagerCB.getValue().equals(a.DS11.get(i).getCourse_Name()))
 	 				DS11SPECIFIC.add(new CoursePriceHistory(a.DS11.get(i).getHistoryID(), a.DS11.get(i).getCourse_Name(), a.DS11.get(i).getTime()
-	 						, a.DS11.get(i).getPrice(), a.DS11.get(i).getMassagerCost()));
+	 						, a.DS11.get(i).getPrice(), a.DS11.get(i).getMassagerCost(), a.DS11.get(i).getDate()));
 		    	}
 	 		}
 	 		TableView.setItems(DS11SPECIFIC);
@@ -90,16 +75,14 @@ public class ReportCourse  implements Initializable {
 	 	
     @FXML
     public void actionToMenu(ActionEvent event){
-        Button b =(Button)event.getSource();
+    	Button b =(Button)event.getSource();
         Stage stage = (Stage) b.getScene().getWindow();
-        //a=textField.getText();
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("ui_owner.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ui_course.fxml"));
         Parent root = null;
         try {
 
-        	stage.setScene(new Scene((Parent) loader.load(), 498, 455));
-            stage.setTitle("๏SenseAroma๏");
+            stage.setScene(new Scene((Parent) loader.load(), 684, 531));
+            stage.setTitle("Seat");
             stage.show();
         } catch (IOException e1) {
             e1.printStackTrace();

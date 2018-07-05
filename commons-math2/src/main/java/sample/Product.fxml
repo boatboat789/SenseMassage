@@ -44,7 +44,7 @@
          </font>
       </Label>
       <TextField fx:id="text2" layoutX="134.0" layoutY="401.0" prefHeight="25.0" prefWidth="155.0" />
-      <Button layoutX="306.0" layoutY="475.0" mnemonicParsing="false" onAction="#actionButtonTest" prefHeight="45.0" prefWidth="83.0" style="-fx-background-color: #FFFFFF;" text="ADD" textFill="#ff6666">
+      <Button layoutX="306.0" layoutY="475.0" mnemonicParsing="false" onAction="#actionButtonTest" prefHeight="45.0" prefWidth="83.0" style="-fx-background-color: #FFFFFF;" text="Create" textFill="#ff6666">
          <font>
             <Font name="Arial Black" size="15.0" />
          </font>
@@ -83,9 +83,14 @@
             <Label fx:id="labell" layoutX="566.0" layoutY="2.0" prefHeight="24.0" prefWidth="112.0" text="dd/mm/yyyy xx:xx:xx" />
          </children>
       </Pane>
-      <Button layoutX="410.0" layoutY="476.0" mnemonicParsing="false" onAction="#actionButtonCanceled" prefHeight="43.0" prefWidth="92.0" style="-fx-background-color: #FFFFFF;" text="UPDATE" textFill="#ff6666">
+      <Button layoutX="410.0" layoutY="476.0" mnemonicParsing="false" onAction="#actionButtonCanceled" prefHeight="43.0" prefWidth="92.0" style="-fx-background-color: #FFFFFF;" text="Add" textFill="#ff6666">
          <font>
-            <Font name="Arial Black" size="12.0" />
+            <Font name="Arial Black" size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="23.0" layoutY="475.0" mnemonicParsing="false" onAction="#actionButtonHistory" prefHeight="45.0" prefWidth="83.0" style="-fx-background-color: #FFFFFF;" text="History" textFill="#ff6666">
+         <font>
+            <Font name="Arial Black" size="15.0" />
          </font>
       </Button>
    </children>

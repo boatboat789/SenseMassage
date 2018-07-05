@@ -1,9 +1,7 @@
 package Detail;
-
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
-
 public class CustomerDetail {
 	private  BooleanProperty Check;
 	private final SimpleStringProperty Customer_ID ;

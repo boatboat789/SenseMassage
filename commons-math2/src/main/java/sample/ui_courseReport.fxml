@@ -40,10 +40,11 @@
       <TableView fx:id="TableView" layoutX="16.0" layoutY="145.0" prefHeight="233.0" prefWidth="653.0" style="-fx-background-color: #FFFFCC;">
          <columns>
             <TableColumn fx:id="HistoryID" prefWidth="75.0" style="-fx-background-color: #FFFFFF;" text="HistoryID" />
-            <TableColumn fx:id="Course_Name" prefWidth="248.0" style="-fx-background-color: #FFFFFF;" text="CourseName" />
-            <TableColumn fx:id="Time" prefWidth="95.0" style="-fx-background-color: #FFFFFF;" text="Time" />
-            <TableColumn fx:id="Price" prefWidth="95.0" style="-fx-background-color: #FFFFFF;" text="Price" />
-            <TableColumn fx:id="MassagerCost" prefWidth="139.0" style="-fx-background-color: #FFFFFF;" text="MassagerCost" />
+            <TableColumn fx:id="Course_Name" prefWidth="223.0" style="-fx-background-color: #FFFFFF;" text="CourseName" />
+            <TableColumn fx:id="Time" prefWidth="81.0" style="-fx-background-color: #FFFFFF;" text="Time" />
+            <TableColumn fx:id="Price" prefWidth="90.0" style="-fx-background-color: #FFFFFF;" text="Price" />
+            <TableColumn fx:id="MassagerCost" prefWidth="89.0" style="-fx-background-color: #FFFFFF;" text="MassagerCost" />
+            <TableColumn fx:id="Date" prefWidth="94.0" style="-fx-background-color: #FFFFFF;" text="Date" />
          </columns>
       </TableView>
    </children>

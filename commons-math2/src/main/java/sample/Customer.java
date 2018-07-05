@@ -1,5 +1,4 @@
 package sample;
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -20,7 +19,6 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -28,12 +26,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ResourceBundle;
-
 import javax.swing.JOptionPane;
-
-import Detail.CorseDetail;
 import Detail.CustomerDetail;
-
 public class Customer implements Initializable {
 	public ConnectDatabase a = new ConnectDatabase();
 	@FXML private TextField text1;
@@ -48,14 +42,12 @@ public class Customer implements Initializable {
     @FXML  public   TableColumn<CustomerDetail,String> Massager_Name;
     @FXML  public   TableColumn<CustomerDetail,String> Phone;
     @FXML  public   TableColumn<CustomerDetail,String> Details;
-  //  public static ObservableList<CustomerDetail> list = FXCollections.observableArrayList();
     public ArrayList<String> x = new ArrayList<>();
    public Customer (){
 	   dynamicdate();
    }
     @Override
     public void initialize(URL location, ResourceBundle resources){
-    	System.out.println("sss");
     	Check.setCellValueFactory(new PropertyValueFactory<CustomerDetail,Boolean>("Check"));
 		Check.setCellFactory(CheckBoxTableCell.forTableColumn(Check));
 		Customer_ID.setCellValueFactory(new PropertyValueFactory<CustomerDetail,String>("Customer_ID"));
@@ -72,21 +64,18 @@ public class Customer implements Initializable {
 	}
     @FXML
     public void actionButtonTest(ActionEvent event) throws ClassNotFoundException, SQLException{
-    	System.out.println("d");
     	int count = a.DS3.size()+1;
     	int checkDoM1 = 0;
-   	 event.getSource();
-     String Customer_ID = Integer.toString(count);
-     String Customer_Name = text1.getText();
-     String Massager_Name = combobox.getValue();
- 	String Phone = text2.getText(); 
- 	String dataild = text3.getText();
- 	System.out.println("sssssssssssssssssssssss"+text3.getText());
-     String PhoneDB = null;
-     if(Massager_Name == null){
-    	 Massager_Name = "0";
-     }
-     String Massager_ID = "";
+    	String Customer_ID = Integer.toString(count);
+    	String Customer_Name = text1.getText();
+    	String Massager_Name = combobox.getValue();
+    	String Phone = text2.getText(); 
+    	String dataild = text3.getText();
+    	String PhoneDB = null;
+    	if(Massager_Name == null){
+    		Massager_Name = "0";
+    	}
+    	String Massager_ID = "";
     	if(text1.getText().equals("")){
     		JOptionPane.showMessageDialog(null,"Please Fill Customer Name");
     	}
@@ -133,7 +122,6 @@ public class Customer implements Initializable {
 			    	      }
 			    	 }
 	    	 checkDoM1 = checkDigit(Phone);
-	    	 System.out.println(checkDoM1+"<heereeerer");
 	    	if(checkDoM>0){
 		    	JOptionPane.showMessageDialog(null,"Can't use something like"+'"'+ "or digit. ");
 		    }
@@ -160,7 +148,6 @@ public class Customer implements Initializable {
 		 int checkDoM1 = 0;
 		  String[] sp = price.split("");
 	    	 if(sp.length>0){
-	    		 String[] ae1 = price.split("");
 		    	 for(int i = 0 ; i < sp.length ;i++){
 		    	      char c = price.charAt(i);
 		    	      if(Character.isAlphabetic(c)){
@@ -182,7 +169,6 @@ public class Customer implements Initializable {
     private Button logout ;
     @FXML
     public void actionButtonCanceled(ActionEvent event) throws ClassNotFoundException, SQLException{
-	    	int checkDoM2 =0;
 	    	int count =0;
 	    	for (CustomerDetail p1 : TableView.getItems()) {
 	 			if(p1.isCheck()==true ){
@@ -190,9 +176,8 @@ public class Customer implements Initializable {
 		    	 }
 			}
 	    	 if(count ==0){
-	    			int checkDoM1 = 0,check=0,checkDoM3 = 0;
+	    			int checkDoM1 = 0;
 	    	    	String MassagerID="", CustomerID="";
-	    	 		int check2=0;
 	    	 		if(count ==0) {
 	    	 	    	String Massager_Name = combobox.getValue();
 	    	     	 	String Phone = text2.getText(); 
@@ -225,7 +210,6 @@ public class Customer implements Initializable {
 	    		    		JOptionPane.showMessageDialog(null,"Please check name ");	
 	    		    	}
 	    		    	else {
-	    		    		check=1;
 	    		    		a.updateCustomer(CustomerID,Phone,dataild,MassagerID);
 	    		    		 JOptionPane.showMessageDialog(null,"Update Price Success");
 	    		    	}  

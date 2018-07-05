@@ -1,5 +1,4 @@
 package sample;
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -19,7 +18,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -27,15 +25,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ResourceBundle;
-
 import javax.swing.JOptionPane;
-
 import Detail.CorseDetail;
-import Detail.ManagementCPDetail;
-
 public class Course implements Initializable {
     @FXML
     private Button borrow ;
@@ -71,14 +64,10 @@ public class Course implements Initializable {
 	            row.setOnMouseClicked(event -> {
 	                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
 	                	CorseDetail rowData = row.getItem();
-	                	
-	                    System.out.println("Double click on: "+rowData.getCourse_ID());
 	       		    	text1.setText(rowData.getCourse_Name());
 	       			    text2.setText(rowData.getPrice());
 	       			    combobox.setValue(rowData.getTime());
-	       			    text3.setText(rowData.getMassagerCost());
-	       	   
-	       	    		 
+	       			    text3.setText(rowData.getMassagerCost());    			 
 	                }
 	            });
 	            return row ;
@@ -94,21 +83,22 @@ public class Course implements Initializable {
 	}
     @FXML
     public void actionButtonTest(ActionEvent event) throws ClassNotFoundException, SQLException{
-    	String count = null ;
+    	 String count = null ;
     	 String x = combobox.getValue();
-    	 int checkDoM1 = 0;
-    	 int c12 = 0;
-    	 String[] ssss = text2.getText().split("");
-    	 if(ssss.length >0){
+    	 SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
+    	 Calendar cal = Calendar.getInstance();
+    	 String Date = format1.format(cal.getTime());
+    	 int checkDoM1 = 0;int c12 = 0;
+    	 String[] checkChar = text2.getText().split("");
+    	 if(checkChar.length >0){
     		 if(!text2.getText().equals("") )
-	    	 for(int i = 0 ; i < ssss.length ;i++){
+	    	 for(int i = 0 ; i < checkChar.length ;i++){
 	   	      text2.getText().charAt(i);
-	   	      if(ssss[i].equals(".")){
+	   	      if(checkChar[i].equals(".")){
 	   	    	 c12 = c12+1;
 	   	      }
     	 }
     	 }
-    	 System.out.println("im here -----------------------------------------------" +x);
     	 if(text1.getText().equals("")){
     		 JOptionPane.showMessageDialog(null,"Please Fill Course Name");
     	}
@@ -138,7 +128,6 @@ public class Course implements Initializable {
 	    			Name = " ";
 	    			a.findServiceCourse(count);
 	    			for(int i1 = 0 ;i1< a.courseTime.size();i1++){
-	    				System.out.println(ServiceTime + "     "+a.courseTime.get(i1));
 	    	    		if(ServiceTime.equals(a.courseTime.get(i1))){
 	    					check1 = 1 ;
 	    				}
@@ -148,22 +137,11 @@ public class Course implements Initializable {
 	    			if(check==0){
 	    				int c1 = Integer.parseInt(a.courseID.get(a.courseID.size()-1))+1;
 	    				count = Integer.toString(c1);
-	    				System.out.println(count );
 	    			}
-	    			
 	    		}
     		}
-    		if(check==1){
-    			for(int i = 0 ; i<a.courseTime.size(); i++){
-        			System.out.println(" Course   "+a.courseTime.get(i) +" Price   "+ a.checkPrice.get(i));
-        		}
-    		}
     		check2= checkTimePrice(combobox.getValue(),Price);
-    			
-    	
-    		// CHECK " ' DIGIT
-    		int checkDoM =checkDigit(Name);
-			// check price digit
+    		int checkDoM =checkDigitName(Name);
     		 checkDoM1 = checkDigit(Price);
 	    	String  MassagerCost = text3.getText();
     		if(checkDoM>0){
@@ -173,7 +151,6 @@ public class Course implements Initializable {
        			JOptionPane.showMessageDialog(null,"Please Fill Digit Only.");
        		 }	
     		else if(Integer.parseInt(Price) < 150 ){
-    			System.out.println("hhhhhhhhhhhhhh");
     			JOptionPane.showMessageDialog(null,"Price should not be less than 150 baht.");
     		}
     		else if(Integer.parseInt(Price) > 2000 ){
@@ -183,22 +160,21 @@ public class Course implements Initializable {
     			JOptionPane.showMessageDialog(null,"Check prices that more than or equal or less than to other times. ");	
     		}
     		else if(check == 0){
-		        a.courseName.add(Name);
-		        a.courseID.add(count);
-		        System.out.println("check :"+check  + "count : "+ count);
 		        a.insertCourse(count, Name);
 		        a.insertCoursePrice(count,ServiceTime,Price,MassagerCost);
+		        a.getNewSetTable();
 		        TableView.setItems(a.DS);
+		        a.getNewSetCourseHistory();
+		        a.insertCoursePriceHistory(a.DS11.size()+1,count, combobox.getValue(),Price, MassagerCost,Date);
 		        JOptionPane.showMessageDialog(null,"Add course Success.");
+		        
     		}
     		//nameซ้ำ timeไม่ซ้ำ
     		else if (check == 1&& check1==0){
-    			 a.DS.clear();
-    			 a.courseName.clear();
-    			 a.courseID.clear();
-    			 System.out.println(count + "    "+ ServiceTime+ "    "+Price);
 		        a.insertCoursePrice(count,ServiceTime,Price,MassagerCost);
     			a.getNewSetTable();
+    			a.getNewSetCourseHistory();
+		        a.insertCoursePriceHistory(a.DS11.size()+1,count, combobox.getValue(),Price, MassagerCost,Date);
     			TableView.setItems(a.DS);
     			JOptionPane.showMessageDialog(null,"Add service time + price Success.");
     		}
@@ -214,21 +190,23 @@ public class Course implements Initializable {
     @FXML
     public void actionButtonCanceled(ActionEvent event) throws ClassNotFoundException, SQLException{
 		String Price,MCost="";
+		SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
+   		Calendar cal = Calendar.getInstance();
+   		String Date = format1.format(cal.getTime());
 		int count =0;
 		 String x = combobox.getValue();
     	 int checkDoM1 = 0;
     	 int c12 = 0;
-    	 String[] ssss = text2.getText().split("");
-    	 if(ssss.length >0){
+    	 String[] checkChar = text2.getText().split("");
+    	 if(checkChar.length >0){
     		 if(!text2.getText().equals("") )
-	    	 for(int i = 0 ; i < ssss.length ;i++){
+	    	 for(int i = 0 ; i < checkChar.length ;i++){
 	   	      text2.getText().charAt(i);
-	   	      if(ssss[i].equals(".")){
+	   	      if(checkChar[i].equals(".")){
 	   	    	 c12 = c12+1;
 	   	      }
     	 }
     	 }
-    	 System.out.println("im here -----------------------------------------------" +x);
     	 if(text1.getText().equals("")){
     		 JOptionPane.showMessageDialog(null,"Please Fill Course Name");
     	}
@@ -256,13 +234,11 @@ public class Course implements Initializable {
     						CID = c.getCourse_ID();
     					 }
     				 }
-    		    	 System.out.println(CID+"DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
     		    	 a.findServiceCourse(CID);
     		    	 check2 =checkTimePrice(combobox.getValue(),Price);
     		    	 checkDoM1 = checkDigit(text2.getText());
     		    	 MCost =text3.getText();
     		    	 checkDoM3 = checkDigit(text3.getText());
-    		    	 System.out.println(check2);
     		    	if(check2==1){
     		    	   	JOptionPane.showMessageDialog(null,"Check prices that more than or equal or less than to other times. ");	
     		    	 }
@@ -271,8 +247,11 @@ public class Course implements Initializable {
     		    	}
     		    	else {
     		    		check=1;
-    		    		a.insertCoursePriceHistory(a.DS11.size()+1,CID, combobox.getValue(),Price, MCost);
-    		    		a.updateCoursePrice(CID, combobox.getValue(),Price,MCost);
+      		    		a.updateCoursePrice(CID, combobox.getValue(),Price,MCost);
+    		    		a.getNewSetTable();
+    	    			a.getNewSetCourseHistory();
+  
+    		    		a.insertCoursePriceHistory(a.DS11.size()+1,CID, combobox.getValue(),Price, MCost,Date);
     		    		 		}  
     	 		}
     	 		 if(check==0) {
@@ -295,17 +274,13 @@ public class Course implements Initializable {
     }
 	private int checkTimePrice(String STime, String Price) {
     	int check2=0;
-   
-    	
 		if(a.courseTime.size() == 1){
-			System.out.println("1.00hereeeeee1");
 			if(STime.equals("1 Hr.")){
 				 if("1.30 Hrs.".equals(a.courseTime.get(0))){
     				if(Integer.parseInt(Price) >= Integer.parseInt(a.checkPrice.get(0))){
     					check2=1;
     				}
-				}
-				
+				}		
 				else if("2 Hrs.".equals(a.courseTime.get(0))){
     				if(Integer.parseInt(Price) >= Integer.parseInt(a.checkPrice.get(0))){
     					check2=1;
@@ -341,9 +316,7 @@ public class Course implements Initializable {
 				
 		}
 		else if(a.courseTime.size() == 2){
-			System.out.println("2");
 			if(STime.equals("1 Hr.")){
-				System.out.println("21");
 				if("1 Hr.".equals(a.courseTime.get(0))&&"1.30 Hrs.".equals(a.courseTime.get(1))){
     				if(Integer.parseInt(Price) >= Integer.parseInt(a.checkPrice.get(1))){
     					check2=1;
@@ -385,7 +358,6 @@ public class Course implements Initializable {
 			}
 			else if(STime.equals("2 Hrs.")){
 				if("1 Hr.".equals(a.courseTime.get(0))&&"1.30 Hrs.".equals(a.courseTime.get(1))){
-					System.out.println(Price +"    "+ a.checkPrice.get(0)+"    "+  a.checkPrice.get(1));
     				if(Integer.parseInt(Price) <= Integer.parseInt(a.checkPrice.get(0))){
     					check2=1;
     				}
@@ -408,7 +380,6 @@ public class Course implements Initializable {
 		}
 		else if(a.courseTime.size() == 3){
 			if(STime.equals(a.courseTime.get(0))){
-				System.out.println("hereeeeee1");
 				if(Integer.parseInt(Price) >= Integer.parseInt(a.checkPrice.get(1))){
 					check2=1;
 				}
@@ -418,7 +389,6 @@ public class Course implements Initializable {
 				
 			}
 			else if(STime.equals(a.courseTime.get(1))){
-				System.out.println("hereeeeee2");
 				if(Integer.parseInt(Price) <= Integer.parseInt(a.checkPrice.get(0))){
 					check2=1;
 				}
@@ -428,7 +398,6 @@ public class Course implements Initializable {
 				
 			}
 			else if(STime.equals(a.courseTime.get(2))){
-				System.out.println("hereeeeee3");
 				if(Integer.parseInt(Price) <= Integer.parseInt(a.checkPrice.get(0))){
 					check2=1;
 				}
@@ -445,35 +414,57 @@ public class Course implements Initializable {
 		 int checkDoM1 = 0;
 		  String[] sp = price.split("");
 	    	 if(sp.length>0){
-	    		 String[] ae1 = price.split("");
-	    		 for(int i = 0 ; i < ae1.length ;i++){
+	    		 for(int i = 0 ; i < sp.length ;i++){
 		    	      price.charAt(i);
-		    	    if(ae1[i].equals("\"")){
+		    	    if(sp[i].equals("\"")){
 		    	    	 checkDoM1 = checkDoM1+1;
 		    	      }
-		    	     else if(ae1[i].equals("'")){
+		    	     else if(sp[i].equals("'")){
 		    	    	 checkDoM1 = checkDoM1+1;
 		    	      }
-		    	    else if(ae1[i].equals(".")){
+		    	    else if(sp[i].equals(".")){
 		    	    	 checkDoM1 = checkDoM1+1;
 		    	      }
-		    	    else if(ae1[i].equals("-")){
+		    	    else if(sp[i].equals("-")){
 		    	    	 checkDoM1 = checkDoM1+1;
 		    	      }
 		    	 }
 	    		 if(checkDoM1==0) {
-		    	 for(int i = 0 ; i < sp.length ;i++){
-		    	      char c = price.charAt(i);
-		    	      if(Character.isAlphabetic(c)){
-		    	    	  checkDoM1 = 10000;
-		    	       }
-		    	      
-		    	 }
+			    	 for(int i = 0 ; i < sp.length ;i++){
+			    	      char c = price.charAt(i);
+			    	      if(Character.isAlphabetic(c)){
+			    	    	  checkDoM1 = 10000;
+			    	       }
+			    	      
+			    	 }
 	    		 }
 	    	 }
 
 		 return checkDoM1;
 	 }
+    public int checkDigitName(String price) {
+		 int checkDoM1 = 0;
+		  String[] sp = price.split("");
+	    	 if(sp.length>0){
+	    		 for(int i = 0 ; i < sp.length ;i++){
+		    	      price.charAt(i);
+		    	    if(sp[i].equals("\"")){
+		    	    	 checkDoM1 = checkDoM1+1;
+		    	      }
+		    	     else if(sp[i].equals("'")){
+		    	    	 checkDoM1 = checkDoM1+1;
+		    	      }
+		    	    else if(sp[i].equals(".")){
+		    	    	 checkDoM1 = checkDoM1+1;
+		    	      }
+		    	    else if(sp[i].equals("-")){
+		    	    	 checkDoM1 = checkDoM1+1;
+		    	      }
+		    	 }
+	    	 }
+		 return checkDoM1;
+	 }
+   
     @FXML
     public void actionToMenu(ActionEvent event){
     	a.DS.clear();

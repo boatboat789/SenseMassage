@@ -1,5 +1,4 @@
 package Detail;
-
 import javafx.beans.property.SimpleStringProperty;
 public class CorseDetail {
 	private final SimpleStringProperty Course_ID ;

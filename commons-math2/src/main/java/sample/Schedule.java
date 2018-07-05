@@ -1,5 +1,4 @@
 package sample;
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -15,26 +14,18 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ResourceBundle;
-
 import javax.swing.JOptionPane;
-
-import Detail.BookingDetail;
-import Detail.MassagerDetail;
 import Detail.ScheduleDetail;
-
 public class Schedule implements Initializable {
 	public ConnectDatabase a = new ConnectDatabase();
 	@FXML public  ComboBox<String> combobox;
@@ -45,8 +36,6 @@ public class Schedule implements Initializable {
     @FXML  public   TableColumn<ScheduleDetail,String> Day;
     @FXML  public   TableColumn<ScheduleDetail,String> Massager_ID;
     @FXML  public   TableColumn<ScheduleDetail,String> Massager_Name;
-  //  public static ObservableList<ScheduleDetail> list = FXCollections.observableArrayList();
-    public ArrayList<String> x = new ArrayList<>();
      public Schedule() {
     	 dynamicdate();
 	}
@@ -64,8 +53,7 @@ public class Schedule implements Initializable {
 	}
     @FXML
     public void actionButtonTest(ActionEvent event) throws ClassNotFoundException, SQLException{
-      	String count = null ;
-      	 String Day = combobox.getValue();
+      	String Day = combobox.getValue();
          String Massager_Name = combobox1.getValue();
          System.out.println(Day);
     	if (Day == null){
@@ -78,15 +66,13 @@ public class Schedule implements Initializable {
 	    	int check =0;
 	    	int check1 =0;
 	    		
-	    	 Button b =(Button)event.getSource();
+	    	 event.getSource();
 	         String Massager_ID = " "  ;
 				for (int x = 0 ; x< a.DS1.size();x++){
 					if(Massager_Name.equals(a.DS1.get(x).getMassager_Name())){
 						Massager_ID = a.DS1.get(x).getMassager_ID();
-					}
-				
-				}
-				
+					}	
+				}	
 				for(int i = 0 ; i<a.DS2CHECKONLY.size(); i++){
 	    			String bc =a.DS2CHECKONLY.get(i).getMassager_Name();
 					if(bc.equals(Massager_Name)){
@@ -95,26 +81,17 @@ public class Schedule implements Initializable {
 							check1=1;
 						}
     				}
-
-		    		
-
 				}
-				
-				//Time nameไม่ซ้ำ
-				System.out.println(check + "       "+ check1);
 				String Status = "Using";
 	    		if(check == 0){
 	    			a.DS2.add(new ScheduleDetail(Day, Massager_ID, Massager_Name,Status));
 	    			a.DS2CHECKONLY.add(new ScheduleDetail(Day, Massager_ID, Massager_Name,Status));
 	    			a.insertSchedule(Day, Massager_ID,Status);
+	    			a.getNewSetTableSchedule();
 			        TableView.setItems(a.DS2);
 			        JOptionPane.showMessageDialog(null,"Add Schedule Success");
 	    		}
-	    		//nameซ้ำ timeไม่ซ้ำ
 	    		else if (check == 1&& check1==0){
-	    		/*	for ( int i = 0; i<TableView.getItems().size(); i++) {
-	    			    TableView.getItems().clear();
-	    			}*/
 	    			 a.DS2.clear();
 	    			 a.DS2CHECKONLY.clear();
 			        a.insertSchedule(Day, Massager_ID,Status);
@@ -122,7 +99,6 @@ public class Schedule implements Initializable {
 	    			TableView.setItems(a.DS2);
 	    			JOptionPane.showMessageDialog(null,"Add Detail Success");
 	    		}
-	    		//time + name ซ้ำ
 	    		else if(check == 1&&check1 ==1){
 	    			for(int i = 0 ; i<a.DS2CHECKONLY.size(); i++){
 						if(a.DS2CHECKONLY.get(i).getMassager_Name().equals(Massager_Name)){
@@ -135,6 +111,7 @@ public class Schedule implements Initializable {
 	    			 a.DS2CHECKONLY.clear();
 	    			a.getNewSetTableSchedule();
 	    			TableView.setItems(a.DS2);
+	    			JOptionPane.showMessageDialog(null,"Add Schedule Success");
     		}
     	}
     }
@@ -148,7 +125,6 @@ public class Schedule implements Initializable {
     @FXML
     public void actionButtonCanceled(ActionEvent event) throws ClassNotFoundException, SQLException{
     	int check =0;
-    	int i = 0;
     	String id = "";
     	
     	 for (ScheduleDetail p : TableView.getItems()) {
@@ -166,8 +142,6 @@ public class Schedule implements Initializable {
 		 		else {
 		 			Status = "Using";
 		 		}
-		 		System.out.println(id+"<<<<<<<<<<<<<<");
-		 		System.out.println(p.getDay()+id+Status);
              a.updateSchedule(p.getDay(),id,Status);
              check=1;
 		 	}
@@ -186,13 +160,25 @@ public class Schedule implements Initializable {
     	
     }
     @FXML
+    public void actionButtonHistory(ActionEvent event){
+        Button b =(Button)event.getSource();
+        Stage stage = (Stage) b.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ui_scheduleHis.fxml"));
+        try {
+        	stage.setScene(new Scene((Parent) loader.load(),684, 531));
+            stage.setTitle("๏SenseAroma๏");
+            stage.show();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+    @FXML
     public void actionToMenu(ActionEvent event){
         Button b =(Button)event.getSource();
         Stage stage = (Stage) b.getScene().getWindow();
         //a=textField.getText();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ui_owner.fxml"));
-        Parent root = null;
         try {
 
         	stage.setScene(new Scene((Parent) loader.load(), 498, 455));

@@ -42,6 +42,7 @@ public class cashServiceDetail {
 	}
 	public String getServiceTime() {
 		return ServiceTime.get();
+		
 	}
 	public String getPrice() {
 		return Price.get();	

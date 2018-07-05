@@ -22,16 +22,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 import Detail.MassagerDetail;
 public class Massager implements Initializable {
-	public  Massager() {
-		// TODO Auto-generated method stub
-		dynamicdate();
-	}
 	public ConnectDatabase a = new ConnectDatabase();
 		@FXML private TextField text1;
 	    @FXML private TextField text2;
@@ -42,8 +37,6 @@ public class Massager implements Initializable {
 	    @FXML  public   TableColumn<MassagerDetail,String> Massager_Name;
 	    @FXML  public   TableColumn<MassagerDetail,String> Phone;
 	    @FXML  public   TableColumn<MassagerDetail,String> Status;
-	  //  public static ObservableList<MassagerDetail> list = FXCollections.observableArrayList();
-	    public ArrayList<String> x = new ArrayList<>();
 	    @Override
 	    public void initialize(URL location, ResourceBundle resources){
 	    	Check.setCellValueFactory(new PropertyValueFactory<MassagerDetail,Boolean>("Check"));
@@ -54,6 +47,9 @@ public class Massager implements Initializable {
 			Status.setCellValueFactory(new PropertyValueFactory<MassagerDetail,String>("Status"));
 			TableView.setItems(a.DS1);	
 			TableView.setEditable(true);
+		}
+		public  Massager() {
+			dynamicdate();
 		}
 	    @FXML
 	    public void actionButtonTest(ActionEvent event) throws ClassNotFoundException, SQLException{
@@ -178,7 +174,7 @@ public class Massager implements Initializable {
     		 String Status="";
     		 		if(p.isCheck()==true ){
     		 			if(p.getStatus().equals("Active")) {
-    		 				Status = "Unactive";
+    		 				Status = "Inactive";
     		 			}
     		 			else {
     		 				Status = "Active";
@@ -195,7 +191,6 @@ public class Massager implements Initializable {
         	 a.getNewSetTableMassager();
         	 TableView.setItems(a.DS1);
     	 }
-    	
     }
     @FXML
     public void actionButtonUpdate(ActionEvent event) throws ClassNotFoundException, SQLException{
@@ -204,7 +199,6 @@ public class Massager implements Initializable {
     		JOptionPane.showMessageDialog(null,"Please Fill Phone number");
     	}
     	else {
-    		
     		 int phoneCheck = checkPhone();
     		 if(phoneCheck !=9 & phoneCheck != 10){
 		    		JOptionPane.showMessageDialog(null,"Phone need 9-10 digit Only");

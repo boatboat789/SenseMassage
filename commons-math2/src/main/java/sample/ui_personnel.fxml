@@ -12,7 +12,7 @@
             <Font name="Bauhaus 93" size="37.0" />
          </font>
       </Label>
-      <Button layoutX="41.0" layoutY="151.0" mnemonicParsing="false" onAction="#actionToBooking" prefHeight="37.0" prefWidth="180.0" style="-fx-background-color: #FFFFFF;" text="Booking" textFill="#ff6666">
+      <Button layoutX="41.0" layoutY="151.0" mnemonicParsing="false" onAction="#actionToBooking" prefHeight="37.0" prefWidth="180.0" style="-fx-background-color: #FFFFFF;" text="CustomerService" textFill="#ff6666">
          <font>
             <Font name="Arial Unicode MS" size="18.0" />
          </font></Button>

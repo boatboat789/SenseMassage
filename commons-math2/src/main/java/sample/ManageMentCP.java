@@ -1,5 +1,4 @@
 package sample;
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -15,12 +14,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -28,11 +25,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ResourceBundle;
-
 import javax.swing.JOptionPane;
-
 import Detail.ManagementCPDetail;
-
 public class ManageMentCP implements Initializable {
 	public ConnectDatabase a = new ConnectDatabase();
 	@FXML public  ComboBox<String> combobox;
@@ -42,7 +36,6 @@ public class ManageMentCP implements Initializable {
     @FXML  public   TableColumn<ManagementCPDetail,Boolean> Check;
     @FXML  public   TableColumn<ManagementCPDetail,String> CourseName;
     @FXML  public   TableColumn<ManagementCPDetail,String> ProductName;
-  //  public static ObservableList<ManagementCPDetail> list = FXCollections.observableArrayList();
     public ArrayList<String> x = new ArrayList<>();
      public ManageMentCP() {
     	 dynamicdate();
@@ -60,8 +53,7 @@ public class ManageMentCP implements Initializable {
 	}
     @FXML
     public void actionButtonTest(ActionEvent event) throws ClassNotFoundException, SQLException{
-      	String count = null ;
-      	 String courseName = combobox.getValue();
+      	String courseName = combobox.getValue();
          String productName = combobox1.getValue();
     	if (courseName == null){
     		JOptionPane.showMessageDialog(null,"Please Choose courseName");
@@ -72,14 +64,11 @@ public class ManageMentCP implements Initializable {
     	else{
 	    	int check =0;
 	    	int check1 =0;
-	    		
-	    	 Button b =(Button)event.getSource();
 	         String courseID = " "  ;
 				for (int x = 0 ; x< a.DS.size();x++){
 					if(courseName.equals(a.DS.get(x).getCourse_Name())){
 						courseID = a.DS.get(x).getCourse_ID();
 					}
-				
 				}
 				String ProductID = " "  ;
 				for (int x = 0 ; x< a.DS8.size();x++){
@@ -96,13 +85,7 @@ public class ManageMentCP implements Initializable {
 							check1=1;
 						}
     				}
-
-		    		
-
 				}
-				System.out.println(productName + "      "+ProductID);
-				//Time nameไม่ซ้ำ
-				System.out.println(check + "       "+ check1);
 				String cpid = Integer.toString(a.DS10.size()+1);
 	    		if(check == 0){
 	    			a.insertMCP(cpid,courseID, ProductID);
@@ -110,11 +93,7 @@ public class ManageMentCP implements Initializable {
 			        TableView.setItems(a.DS10);
 			        JOptionPane.showMessageDialog(null,"Add Product Course Success");
 	    		}
-	    		//nameซ้ำ timeไม่ซ้ำ
 	    		else if (check == 1&& check1==0){
-	    		/*	for ( int i = 0; i<TableView.getItems().size(); i++) {
-	    			    TableView.getItems().clear();
-	    			}*/
 	    			 a.DS10.clear();
 	    			 a.DS10CHECKONLY.clear();
 			        a.insertMCP(cpid,courseID, ProductID);
@@ -122,7 +101,6 @@ public class ManageMentCP implements Initializable {
 	    			TableView.setItems(a.DS10);
 	    			JOptionPane.showMessageDialog(null,"Add Detail Success");
 	    		}
-	    		//time + name ซ้ำ
 	    		else if(check == 1&&check1 ==1){
 	    			JOptionPane.showMessageDialog(null,"This Course already have this Product.");
     		}
@@ -137,31 +115,22 @@ public class ManageMentCP implements Initializable {
 
     @FXML
     public void actionButtonCanceled(ActionEvent event) throws ClassNotFoundException, SQLException{
-    	int i = 0;
-    	 String productName = combobox1.getValue();
+    	String productName = combobox1.getValue();
     	 if (productName == null){
      		JOptionPane.showMessageDialog(null,"Please Choose Product Name");
      	}
     	 else {
     		 String CName="";
     		 int count=0;
-    		 int nub=0;
+    		 String nub = null;
     	for (ManagementCPDetail p : TableView.getItems()) {
     		 if(!p.getCourseName().equals("")) {
     			 CName =p.getCourseName();
     			 count=0;
-    			 nub=nub+1;
     		 }
     		 else {
     		 }
     		 if(p.isCheck()==true){
-    			 String courseID = " "  ;
- 				for (int x = 0 ; x< a.DS.size();x++){
- 					if(CName.equals(a.DS.get(x).getCourse_Name())){
- 						courseID = a.DS.get(x).getCourse_ID();
- 					}
- 				
- 				}
  				String ProductID = " "  ;
  				for (int x = 0 ; x< a.DS8.size();x++){
  					if(productName.equals(a.DS8.get(x).getProductName())){
@@ -174,19 +143,25 @@ public class ManageMentCP implements Initializable {
 	 						count=10;
 	 					}
  					}
+ 					System.out.println(CName+"DDDDDDDDDDDDDD"+a.DS10CHECKONLY.get(x).getCourseName());
+ 					if(CName.equals(a.DS10CHECKONLY.get(x).getCourseName())){
+ 						System.out.println(p.getCourseName()+"DDDDDDDDDDDDDD"+a.DS10CHECKONLY.get(x).getCourseName());
+	 					if(p.getProductName().equals(a.DS10CHECKONLY.get(x).getProductName())){
+	 						nub= a.DS10CHECKONLY.get(x).getCPID();
+	 						System.out.println("DDDDDDDDDDDDDD");
+	 					}
+ 					}
  				}
  				if(count==0) {
- 					String nub1 = Integer.toString(nub);
- 					System.out.println(courseID+"><><><><>"+ ProductID);
-	 				a.updateMCP(nub1, ProductID); 
+ 					System.out.println(nub);
+	 				a.updateMCP(nub, ProductID); 
 	    			JOptionPane.showMessageDialog(null,"Update Success");
 	    			count=count+1;
  				}
  				else if(count==10) {
  					JOptionPane.showMessageDialog(null,"Update Fail");
  				}
-    			 }
-    				 
+    			 }	 
          }
     	 a.DS10.clear();
 		 a.DS10CHECKONLY.clear();
@@ -198,12 +173,8 @@ public class ManageMentCP implements Initializable {
     public void actionToMenu(ActionEvent event){
         Button b =(Button)event.getSource();
         Stage stage = (Stage) b.getScene().getWindow();
-        //a=textField.getText();
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ui_owner.fxml"));
-        Parent root = null;
         try {
-
         	stage.setScene(new Scene((Parent) loader.load(), 498, 455));
             stage.setTitle("๏SenseAroma๏");
             stage.show();

@@ -14,6 +14,7 @@ import Detail.ManagementCPDetail;
 import Detail.MassagerDetail;
 import Detail.PaymentDetail;
 import Detail.ProductDetail;
+import Detail.ProductHistoryDetail;
 import Detail.ProductPaymentDetail;
 import Detail.ScheduleDetail;
 import Detail.SkillDetail;
@@ -44,12 +45,16 @@ public class ConnectDatabase {
 	public ObservableList<ScheduleDetail> DS2CHECKONLY = FXCollections.observableArrayList();
 	public ObservableList<CustomerDetail> DS3 = FXCollections.observableArrayList();
 	public ObservableList<BookingDetail> DS4 = FXCollections.observableArrayList();
+	public ObservableList<BookingDetail> DS4Booking = FXCollections.observableArrayList();
 	public ObservableList<BookingDetail> DS4CheckIn = FXCollections.observableArrayList();
 	public ObservableList<BookingDetail> DS4SPECIFIC = FXCollections.observableArrayList();
+	public ObservableList<BookingDetail> DS4History = FXCollections.observableArrayList();
 	public ObservableList<SkillDetail> DS5 = FXCollections.observableArrayList();
 	public ObservableList<SkillDetail> DS5CHECKONLY = FXCollections.observableArrayList();
 	public ObservableList<SkillDetail> DS5SPECIFIC = FXCollections.observableArrayList();
 	public ObservableList<StartWorkDetail> DS6 = FXCollections.observableArrayList();
+	public ObservableList<StartWorkDetail> DS6History = FXCollections.observableArrayList();
+	public ObservableList<StartWorkDetail> DS6Present = FXCollections.observableArrayList();
 	public ObservableList<String> MassagerCIn = FXCollections.observableArrayList();
 	public ObservableList<PaymentDetail> DS7 = FXCollections.observableArrayList();
 	public ObservableList<PaymentDetail> DS7SPECIFIC = FXCollections.observableArrayList();
@@ -59,8 +64,9 @@ public class ConnectDatabase {
 	public ObservableList<ManagementCPDetail> DS10 = FXCollections.observableArrayList();
 	public ObservableList<ManagementCPDetail> DS10CHECKONLY = FXCollections.observableArrayList();
 	public ObservableList<CoursePriceHistory> DS11 = FXCollections.observableArrayList();
-	public ObservableList<ProductPaymentDetail> DS12 = FXCollections.observableArrayList();
-	public ObservableList<ProductPaymentDetail> DS12CHECKONLY = FXCollections.observableArrayList();
+	public ObservableList<ProductHistoryDetail> DS13 = FXCollections.observableArrayList();
+	
+	public ObservableList<ProductPaymentDetail> DS14= FXCollections.observableArrayList();
 	public int countPayment =0 ;
 	public ObservableList<String> productName= FXCollections.observableArrayList();
 	public ConnectDatabase() {
@@ -76,7 +82,7 @@ public class ConnectDatabase {
 		getNewSetProduct();
 		getNewSetTableManagementCP();
 		getNewSetCourseHistory();
-		getNewSetProductPayment();
+		getNewSetProductHistory();
 	}
 	public void getTimeWork() {
 		sortHr.clear();
@@ -140,9 +146,9 @@ public class ConnectDatabase {
 	public void getNewSetProduct(){
 		productName.clear();
 		typeProductName.clear();
-		
+		DS8.clear();
+		DS9.clear();
 		try {
-			DS9.clear();
 			Class.forName("org.sqlite.JDBC");
 			String dbURL = "jdbc:sqlite:Course.db";
 			Connection conn = DriverManager.getConnection(dbURL);
@@ -156,30 +162,16 @@ public class ConnectDatabase {
 						DS9.add(new TypeProductDetail(TypeProductID,TypeProductName));
 						typeProductName.add(TypeProductName);
 				}
-				// close connection
-				conn.close();
-			}
-		} catch (ClassNotFoundException ex) {
-				ex.printStackTrace();
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-		try {
-			DS8.clear();
-			Class.forName("org.sqlite.JDBC");
-			String dbURL = "jdbc:sqlite:Course.db";
-			Connection conn = DriverManager.getConnection(dbURL);
-			if (conn != null) {
-				String query = "Select * from Product";
-				Statement statement = conn.createStatement();
-				ResultSet resultSet = statement.executeQuery(query);
-				while (resultSet.next()) {
-						String  ProductID = resultSet.getString(1);
-						String ProductName = resultSet.getString(2);
-						String TypeProductID = resultSet.getString(3);
-						String DateAddProduct = resultSet.getString(4);
-						String Quantity = resultSet.getString(5);
-						String Price = resultSet.getString(6);
+				String query1 = "Select * from Product";
+				Statement statement1 = conn.createStatement();
+				ResultSet resultSet1 = statement1.executeQuery(query1);
+				while (resultSet1.next()) {
+						String  ProductID = resultSet1.getString(1);
+						String ProductName = resultSet1.getString(2);
+						String TypeProductID = resultSet1.getString(3);
+						String DateAddProduct = resultSet1.getString(4);
+						String Quantity = resultSet1.getString(5);
+						String Price = resultSet1.getString(6);
 						String TypeProduct = "";
 						for (int i = 0 ; i<DS9.size();i++ ){
 			   	        	 if (TypeProductID.equals(DS9.get(i).getTypeProductID())){
@@ -188,9 +180,42 @@ public class ConnectDatabase {
 			   	         }
 						productName.add(ProductName);
 						DS8.add(new ProductDetail(ProductID,ProductName, TypeProduct, DateAddProduct,Quantity, Price));
-					
-				}
 				// close connection
+				
+				}
+				conn.close();
+			}
+		} catch (ClassNotFoundException ex) {
+				ex.printStackTrace();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
+	public void getNewSetProductHistory(){
+		DS13.clear();
+		try {
+			Class.forName("org.sqlite.JDBC");
+			String dbURL = "jdbc:sqlite:Course.db";
+			Connection conn = DriverManager.getConnection(dbURL);
+			if (conn != null) {
+				String query1 = "Select * from ProductHistory";
+				Statement statement1 = conn.createStatement();
+				ResultSet resultSet1 = statement1.executeQuery(query1);
+				while (resultSet1.next()) {
+						String  HPID = resultSet1.getString(1);
+						String PID = resultSet1.getString(2);
+						String ProductName ="";
+						for (int i = 0 ; i<DS8.size();i++ ){
+			   	        	 if (PID.equals(DS8.get(i).getProductID())){
+			   	        		ProductName = DS8.get(i).getProductName();
+			   	        	 }
+			   	         }
+						String Date = resultSet1.getString(3);
+						String Quantity = resultSet1.getString(4);
+						String Detail = resultSet1.getString(5);
+						String price = resultSet1.getString(6);
+						DS13.add(new ProductHistoryDetail(HPID,ProductName, Date,Quantity, Detail,price));
+				}
 				conn.close();
 			}
 		} catch (ClassNotFoundException ex) {
@@ -221,7 +246,8 @@ public class ConnectDatabase {
 						String ServiceTime = resultSet.getString(3);	
 						String Price = resultSet.getString(4);
 						String MassagerCost = resultSet.getString(5);
-						DS11.add(new CoursePriceHistory(HID,CourseName, ServiceTime, Price,MassagerCost));
+						String Date = resultSet.getString(6);
+						DS11.add(new CoursePriceHistory(HID,CourseName, ServiceTime, Price,MassagerCost,Date));
 						
 						}
 					}
@@ -236,7 +262,8 @@ public class ConnectDatabase {
 	}
 	public void getNewSetTable(){
 		DS.clear();
-		int lastNumber = 0;
+		courseName.clear();
+		courseID.clear();
 		try {
 			Class.forName("org.sqlite.JDBC");
 			String dbURL = "jdbc:sqlite:Course.db";
@@ -250,7 +277,6 @@ public class ConnectDatabase {
 					String name = resultSet.getString(2);
 					courseID.add(id);
 					courseName.add(name);
-					lastNumber = Integer.parseInt(id);
 				}
 				String dbURL1 = "jdbc:sqlite:Course.db";
 				conn = DriverManager.getConnection(dbURL1);
@@ -258,7 +284,7 @@ public class ConnectDatabase {
 					String queryPrice = "Select * from Course_Price";
 					statement = conn.createStatement();
 					int check = 0;
-					for(int i = 0 ; i<lastNumber ;i++){
+					for(int i = 0 ; i<courseID.size() ;i++){
 						resultSet = statement.executeQuery(queryPrice);
 						while (resultSet.next()){
 							if(resultSet.getString(1).equals(Integer.toString(i+1))){
@@ -267,17 +293,18 @@ public class ConnectDatabase {
 								String MassagerCost = resultSet.getString(4);
 								if(check==0) {
 									check=1;
-									DSCHECKONLY.add(new CorseDetail(courseID.get(i), courseName.get(i),ServiceTime,Price,MassagerCost));
+									DSCHECKONLY.add(new CorseDetail(Integer.toString(i+1), courseName.get(i),ServiceTime,Price,MassagerCost));
 								}
 								else {
 									DSCHECKONLY.add(new CorseDetail("","",ServiceTime,Price,MassagerCost));
 								}
-									DS.add(new CorseDetail(courseID.get(i), courseName.get(i),ServiceTime,Price,MassagerCost));
+									DS.add(new CorseDetail(Integer.toString(i+1), courseName.get(i),ServiceTime,Price,MassagerCost));
 							}
 						}
 						check= 0;
 					}
 				}
+
 					conn.close();
 				}
 			}
@@ -288,7 +315,6 @@ public class ConnectDatabase {
 			}
 	}
 	public void getNewSetTableMassager(){
-		int c =0;
 		DS1.clear();
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -303,9 +329,7 @@ public class ConnectDatabase {
 					String name = resultSet.getString(2);
 					String Phone = resultSet.getString(3);
 					String Status = resultSet.getString(4);;
-					c = Integer.parseInt(id);
 					DS1.add(new MassagerDetail(id, name,Phone,Status));
-					
 					if(Status.equals("Active")) {
 						MassagerD.add(name);
 						MassagerForBook.add(name);
@@ -313,13 +337,11 @@ public class ConnectDatabase {
 				}
 				conn.close();
 			}
-		} catch (ClassNotFoundException ex) {
-				ex.printStackTrace();
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
+		} catch (ClassNotFoundException ex) {ex.printStackTrace();
+		} catch (SQLException ex) {ex.printStackTrace();}
 	}
 	public void getNewSetTableSchedule(){
+		day.clear();
 		day.add("9:00-13:00");
 		day.add("13:00-19:00");
 		day.add("19:00-24:00");
@@ -394,6 +416,7 @@ public class ConnectDatabase {
 					ResultSet resultSet = statement.executeQuery(queryPrice);
 					while (resultSet.next()){
 						if(resultSet.getString(2).equals(DSCHECKONLY.get(i).getCourse_ID())){	
+							String CPID = resultSet.getString(1); ;
 							String CourseID = resultSet.getString(2); ;
 							String ProductID = resultSet.getString(3);
 							String CourseName = ""  ;
@@ -410,12 +433,12 @@ public class ConnectDatabase {
 							}
 							if(check == 0){
 								check = 1 ;
-								DS10.add(new ManagementCPDetail(CourseName,ProductName));
-								DS10CHECKONLY.add(new ManagementCPDetail(CourseName,ProductName));
+								DS10.add(new ManagementCPDetail(CourseName,ProductName,""));
+								DS10CHECKONLY.add(new ManagementCPDetail(CourseName,ProductName,CPID));
 							}
 							else{
-								DS10.add(new ManagementCPDetail("" , ProductName));
-								DS10CHECKONLY.add(new ManagementCPDetail(CourseName,ProductName));
+								DS10.add(new ManagementCPDetail("" , ProductName,""));
+								DS10CHECKONLY.add(new ManagementCPDetail(CourseName,ProductName,CPID));
 							}
 							
 						}
@@ -512,6 +535,7 @@ public class ConnectDatabase {
 	public void getNewSetTableBooking(){
 		DS4.clear();
 		DS4CheckIn.clear();
+		DS4Booking.clear();
 		try {
 			Class.forName("org.sqlite.JDBC");
 			String dbURL = "jdbc:sqlite:Course.db";
@@ -569,14 +593,21 @@ public class ConnectDatabase {
 						,DS4.get(i).getTimeEnd(),DS4.get(i).getStatus(), DS4.get(i).getPrice()));
 			}
 		}
+		for(int i = 0 ;i<DS4.size();i++) {
+			if(!DS4.get(i).getStatus().equals("Cancled")) {
+				System.out.println(DS4.get(i).getMassagerName());
+				DS4Booking.add(DS4.get(i));
+			}
+		}
 	}
 	
 	public void getNewSetTableBookingWithCustomer(String cusName){
 		DS4SPECIFIC.clear();
 		for (int i = 0 ; i<DS4.size();i++){
 			if(cusName.equals(DS4.get(i).getCustomerName())){
+				if(!DS4.get(i).getStatus().equals("Cancled")) {
 				DS4SPECIFIC.add(DS4.get(i));
-				
+				}
 			}
 		}
 	}
@@ -584,7 +615,9 @@ public class ConnectDatabase {
 		DS4SPECIFIC.clear();
 		for (int i = 0 ; i<DS4.size();i++){
 			if(masName.equals(DS4.get(i).getMassagerName())){
+				if(!DS4.get(i).getStatus().equals("Cancled")) {
 				DS4SPECIFIC.add(DS4.get(i));
+				}
 		
 			}
 		}
@@ -645,6 +678,9 @@ public class ConnectDatabase {
 		}
 	}
 	public void getNewSetTableStartWorking(){
+		DS6.clear();
+		DS6Present.clear();
+		DS6History.clear();
 		try {
 			Class.forName("org.sqlite.JDBC");
 			String dbURL = "jdbc:sqlite:Course.db";
@@ -662,7 +698,10 @@ public class ConnectDatabase {
 							MassagerName = DS1.get(i).getMassager_Name();
 						}
 					}
-					DS6.add(new StartWorkDetail( MID ,  MassagerName, TimeIn));
+					String Date = resultSet.getString(3);
+					String Status = resultSet.getString(4);
+					String TimeOut = resultSet.getString(5);
+					DS6.add(new StartWorkDetail( MID ,  MassagerName, TimeIn,TimeOut,Date,Status));
 				}
 				// close connection
 				conn.close();
@@ -672,82 +711,19 @@ public class ConnectDatabase {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
-	}
-	public void getNewSetProductPayment(){
-		 DS12.clear();
-		 DS12CHECKONLY.clear();
-		try {
-			Class.forName("org.sqlite.JDBC");
-			String dbURL = "jdbc:sqlite:Course.db";
-			Connection conn = DriverManager.getConnection(dbURL);
-			if (conn != null) {
-				String query = "Select * from ProductPayment";
-				Statement statement = conn.createStatement();
-				int count =0, check= 0;
-				String checkID = "";
-				ResultSet resultSet = statement.executeQuery(query);
-				while (resultSet.next()) {
-						String PaymentID =  resultSet.getString(1);
-						String Massager_Name = "";
-						String courseName =  "";
-						String time =  "";
-						String productName ="";
-						String Status = resultSet.getString(4);
-						String datetime = resultSet.getString(5);
-						for(int x =0 ;x<DS7.size();x++) {
-							if(PaymentID.equals(DS7.get(x).getPaymentID())) {
-								 Massager_Name = DS7.get(x).getMassagerName();
-								 courseName = DS7.get(x).getCourseName();
-								 time = DS7.get(x).getServiceTime();
-							}	
-						}
-						String ProductID = resultSet.getString(2);
-						for(int x =0 ;x<DS8.size();x++) {
-							if(ProductID.equals(DS8.get(x).getProductID()))
-								productName = DS8.get(x).getProductName();
-						}
-						String Quantity = resultSet.getString(3);
-						if(checkID=="") {
-							checkID =resultSet.getString(1);
-						}
-						else if(!checkID.equals(PaymentID)){
-							count = 0;
-							checkID =resultSet.getString(1);
-						}
-						else {
-							count = 1;
-						}
-						if(count == 0 && Status.equals("NotDone")) {
-							DS12.add(new ProductPaymentDetail(PaymentID, Massager_Name, courseName, time, productName, Quantity,datetime));
-							DS12CHECKONLY.add(new ProductPaymentDetail(PaymentID, Massager_Name, courseName, time, productName, Quantity,datetime));
-						}
-						else if(count == 1 && Status.equals("NotDone")) {
-							DS12.add(new ProductPaymentDetail("","" ,"" ,"" , productName, Quantity,datetime));
-							DS12CHECKONLY.add(new ProductPaymentDetail(PaymentID, Massager_Name, courseName, time, productName, Quantity,datetime));
-						}	
-				}
-				conn.close();
+		for(int i = 0; i<DS6.size();i++) {
+			if(DS6.get(i).getStatus().equals("Clock In")) {
+				DS6Present.add(DS6.get(i));
+				System.out.println(DS6.get(i).getStatus());
 			}
-		} catch (ClassNotFoundException ex) {
-				ex.printStackTrace();
-		} catch (SQLException ex) {
-			ex.printStackTrace();
+		}
+		for(int i = 0; i<DS6.size();i++) {
+			if(DS6.get(i).getStatus().equals("Clock Out")) {
+				DS6History.add(DS6.get(i));
+			}
 		}
 	}
-	public void insertProductPayment(String no ,String productID, String Quantity, String Status, String time) throws ClassNotFoundException, SQLException {
-        Class.forName("org.sqlite.JDBC");
-        String sql = "INSERT INTO ProductPayment(PaymentID,ProductID,Quantity,Status,Time) VALUES(?,?,?,?,?)";
-		String dbURL = "jdbc:sqlite:Course.db";
-		Connection conn = DriverManager.getConnection(dbURL);
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setString(1,no);
-        pstmt.setString(2,productID);
-        pstmt.setString(3,Quantity);
-        pstmt.setString(4,Status);
-        pstmt.setString(5,time);
-        pstmt.executeUpdate();
-        conn.close();
-    }
+
 
 	public void updateProduct(String pid, String quantity) throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
@@ -762,7 +738,6 @@ public class ConnectDatabase {
 	        conn.close();
 	}
 	public void updateProduct(String pid, String quantity,String dateADD,String TypeID ,String Price) throws ClassNotFoundException, SQLException {
-		// TODO Auto-generated method stub
 		 Class.forName("org.sqlite.JDBC");
 	        String sql = "update Product set Quantity = ? ,DateAddProduct=? ,TypeProduct = ? , Price = ? where ProductID = ?";
 			String dbURL = "jdbc:sqlite:Course.db";
@@ -771,34 +746,10 @@ public class ConnectDatabase {
 	        pstmt.setString(1,quantity);
 	        pstmt.setString(2,dateADD);
 	        pstmt.setString(3,TypeID);
-	        pstmt.setString(4,Price);
-	        
+	        pstmt.setString(4,Price);        
 	        pstmt.setString(5,pid);
 	        pstmt.executeUpdate();
 	        conn.close();
-	}
-	public void updateProductPayment(String no ,String productID, String Quantity)throws ClassNotFoundException, SQLException {
-		Class.forName("org.sqlite.JDBC");
-		String sql = "update ProductPayment set Quantity =? where PaymentID = ? and ProductID = ?" ;
-		String dbURL = "jdbc:sqlite:Course.db";
-		Connection conn = DriverManager.getConnection(dbURL);
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1,Quantity);
-		pstmt.setString(2,no);
-		 pstmt.setString(3,productID);
-		pstmt.executeUpdate();
-		conn.close();
-	}
-	public void updateProductPayment(String no ,String Status)throws ClassNotFoundException, SQLException {
-		Class.forName("org.sqlite.JDBC");
-		String sql = "update ProductPayment set Status =? where PaymentID = ? " ;
-		String dbURL = "jdbc:sqlite:Course.db";
-		Connection conn = DriverManager.getConnection(dbURL);
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1,Status);
-		pstmt.setString(2,no);
-		pstmt.executeUpdate();
-		conn.close();
 	}
 	public void insertCourse(String BookId, String name) throws ClassNotFoundException, SQLException {
 	        Class.forName("org.sqlite.JDBC");
@@ -876,13 +827,14 @@ public class ConnectDatabase {
 	
 	public void insertMassager(String Massager_ID , String Massager_Name,String Phone) throws ClassNotFoundException, SQLException {
         Class.forName("org.sqlite.JDBC");
-        String sql = "INSERT INTO Massager(MID,MName,Phone) VALUES(?,?,?)";
+        String sql = "INSERT INTO Massager(MID,MName,Phone,Status) VALUES(?,?,?,?)";
 		String dbURL = "jdbc:sqlite:Course.db";
 		Connection conn = DriverManager.getConnection(dbURL);
 		PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1,Massager_ID);
         pstmt.setString(2,Massager_Name);
         pstmt.setString(3,Phone);
+        pstmt.setString(4,"Active");
         pstmt.executeUpdate();
         conn.close();
     }
@@ -909,51 +861,34 @@ public class ConnectDatabase {
         pstmt.executeUpdate();
         conn.close();
     }
-	public void deleteSkill(String cid,String MID) throws ClassNotFoundException, SQLException {
-		Class.forName("org.sqlite.JDBC");
-		String sql = "DELETE  FROM Course_Massager  where CID = ? and MID = ?";
-		String dbURL = "jdbc:sqlite:Course.db";
-		Connection conn = DriverManager.getConnection(dbURL);
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1,cid);
-		pstmt.setString(2,MID); 
-		pstmt.executeUpdate();
-		conn.close();
-	}
-	public void deleteSkillMassager(String MID) throws ClassNotFoundException, SQLException {
-		Class.forName("org.sqlite.JDBC");
-		String sql = "DELETE  FROM Course_Massager  where and MID = ?";
-		String dbURL = "jdbc:sqlite:Course.db";
-		Connection conn = DriverManager.getConnection(dbURL);
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		// set the corresponding param
-		pstmt.setString(2,MID);
-		// update 
-		pstmt.executeUpdate();
-		conn.close();
-	}
-	public void insertHistoryWork(String MID, String TIN, String DATE)throws ClassNotFoundException, SQLException {
+	public void insertHistoryWork(String MID, String TIN, String DATE, String Status)throws ClassNotFoundException, SQLException {
         Class.forName("org.sqlite.JDBC");
-        String sql = "INSERT INTO HistoryWork(MID,TimeIn,Date) VALUES(?,?,?)";
+        String sql = "INSERT INTO HistoryWork(MID,TimeIn,Date, Status) VALUES(?,?,?,?)";
 		String dbURL = "jdbc:sqlite:Course.db";
 		Connection conn = DriverManager.getConnection(dbURL);
 		PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1,MID);
         pstmt.setString(2,TIN);
         pstmt.setString(3,DATE );
+        pstmt.setString(4,Status );
         pstmt.executeUpdate();
         conn.close();
     }
-	public void deleteHistoryWork(String MID)throws ClassNotFoundException, SQLException {
-        Class.forName("org.sqlite.JDBC");
-        String sql = "DELETE from HistoryWork where MID =? ";
+	public void updateHistoryWork(String MID, String status,String TimeIn, String TimeOut) throws ClassNotFoundException, SQLException {
+		Class.forName("org.sqlite.JDBC");
+		String sql = "update HistoryWork set Status =? ,TimeOut=? where MID = ?  and TimeIn =?";
 		String dbURL = "jdbc:sqlite:Course.db";
 		Connection conn = DriverManager.getConnection(dbURL);
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setString(1,MID);
-        pstmt.executeUpdate();
-        conn.close();
-    }
+		// set the corresponding param
+		pstmt.setString(1,status);
+		pstmt.setString(2,TimeOut);
+		pstmt.setString(3,MID);
+		pstmt.setString(4,TimeIn);
+		// update 
+		pstmt.executeUpdate();
+		conn.close();
+	}
 	public void insertCustomer(String customer_ID, String customer_Name, String massager_ID, String phone,String dataild)throws ClassNotFoundException, SQLException {
         Class.forName("org.sqlite.JDBC");
         String sql = "INSERT INTO Customer(CustomerID,CustomerName,Phone,MID,DetailForMassage) VALUES(?,?,?,?,?)";
@@ -968,18 +903,6 @@ public class ConnectDatabase {
         pstmt.executeUpdate();
         conn.close();
     }
-	public void deleteCustomer(String customer_ID) throws ClassNotFoundException, SQLException {
-		Class.forName("org.sqlite.JDBC");
-		String sql = "DELETE  FROM Customer  where CustomerID = ? ";
-		String dbURL = "jdbc:sqlite:Course.db";
-		Connection conn = DriverManager.getConnection(dbURL);
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		// set the corresponding param
-		pstmt.setString(1,customer_ID);
-		// update 
-		pstmt.executeUpdate();
-		conn.close();
-	}
 	public void updateMassagerStatus(String massager_ID,String Status)throws ClassNotFoundException, SQLException {
 		Class.forName("org.sqlite.JDBC");
 		String sql = "update Massager set Status =? where MID = ?" ;
@@ -1014,9 +937,25 @@ public class ConnectDatabase {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
 	        pstmt.setString(1,pid);
 	        pstmt.setString(2,pName);
-	        pstmt.setString(3,cbTypePro);
+	        pstmt.setString(3,cbTypePro);	
 	        pstmt.setString(4,date );
 	        pstmt.setString(5,quantity);
+	        pstmt.setString(6,price);
+	        pstmt.executeUpdate();
+	        conn.close();
+	}
+	public void insertProductHistory(String HID, String PID, String date,  String quantity, String Detail, String price) throws ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		 Class.forName("org.sqlite.JDBC");
+	        String sql = "INSERT INTO ProductHistory(HPID,ProductID,Date,Quantity,Detail,Price) VALUES(?,?,?,?,?,?)";
+			String dbURL = "jdbc:sqlite:Course.db";
+			Connection conn = DriverManager.getConnection(dbURL);
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+	        pstmt.setString(1,HID);
+	        pstmt.setString(2,PID);
+	        pstmt.setString(3,date);
+	        pstmt.setString(4, quantity );
+	        pstmt.setString(5,Detail);
 	        pstmt.setString(6,price);
 	        pstmt.executeUpdate();
 	        conn.close();
@@ -1024,17 +963,16 @@ public class ConnectDatabase {
 
 	public void insertTypeProduct(int count, String pTName) throws SQLException, ClassNotFoundException {
 		// TODO Auto-generated method stub
-				 Class.forName("org.sqlite.JDBC");
-			        String sql = "INSERT INTO TypeProduct(TypeProductID,TypeProductName) VALUES(?,?)";
-					String dbURL = "jdbc:sqlite:Course.db";
-					Connection conn = DriverManager.getConnection(dbURL);
-					PreparedStatement pstmt = conn.prepareStatement(sql);
-			        pstmt.setString(1,Integer.toString(count));
-			        pstmt.setString(2,pTName);
-			        pstmt.executeUpdate();
-			        conn.close();
+		Class.forName("org.sqlite.JDBC");
+		String sql = "INSERT INTO TypeProduct(TypeProductID,TypeProductName) VALUES(?,?)";
+		String dbURL = "jdbc:sqlite:Course.db";
+		Connection conn = DriverManager.getConnection(dbURL);
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1,Integer.toString(count));
+        pstmt.setString(2,pTName);
+        pstmt.executeUpdate();
+        conn.close();
 	}
-
 	public void updateProductType(String typeProductID, String string) throws ClassNotFoundException, SQLException {
 		// TODO Auto-generated method stub
 		Class.forName("org.sqlite.JDBC");
@@ -1055,7 +993,7 @@ public class ConnectDatabase {
 		String dbURL = "jdbc:sqlite:Course.db";
 		Connection conn = DriverManager.getConnection(dbURL);
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		// set the corresponding param
+
 		pstmt.setString(1,price);
 		pstmt.setString(2,mCost);
 		pstmt.setString(3,ID);
@@ -1072,7 +1010,7 @@ public class ConnectDatabase {
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1,phone);
 		pstmt.setString(2,massager_ID);		
-		// set the corresponding param		
+		
 		// update 
 		pstmt.executeUpdate();
 		conn.close();
@@ -1083,16 +1021,16 @@ public class ConnectDatabase {
 		String dbURL = "jdbc:sqlite:Course.db";
 		Connection conn = DriverManager.getConnection(dbURL);
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		// set the corresponding param
+
 	       pstmt.setString(1,pid);
 	        pstmt.setString(2,cid);
 		// update 
 		pstmt.executeUpdate();
 		conn.close();
 	}
-	public void insertCoursePriceHistory(int i,String ID,String ServiceTime,String Price, String massagerCost) throws ClassNotFoundException, SQLException {
+	public void insertCoursePriceHistory(int i,String ID,String ServiceTime,String Price, String massagerCost, String date) throws ClassNotFoundException, SQLException {
         Class.forName("org.sqlite.JDBC");
-        String sql = "INSERT INTO Course_PriceHistory(HID,CID,ServiceTime,Price,MassagerCost) VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO Course_PriceHistory(HID,CID,ServiceTime,Price,MassagerCost,Date) VALUES(?,?,?,?,?,?)";
 		String dbURL = "jdbc:sqlite:Course.db";
 		Connection conn = DriverManager.getConnection(dbURL);
 		PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -1101,6 +1039,7 @@ public class ConnectDatabase {
         pstmt.setString(3,ServiceTime);
         pstmt.setString(4,Price);
         pstmt.setString(5,massagerCost);
+        pstmt.setString(6,date);
         pstmt.executeUpdate();
         conn.close();
     }
@@ -1124,7 +1063,6 @@ public class ConnectDatabase {
 		String dbURL = "jdbc:sqlite:Course.db";
 		Connection conn = DriverManager.getConnection(dbURL);
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		// set the corresponding param
 	    pstmt.setString(1,phone);
 	    pstmt.setString(2,massager_Name);
 	    pstmt.setString(3,dataild);

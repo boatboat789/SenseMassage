@@ -1,43 +1,40 @@
-package sample;
-
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
-import javafx.util.Duration;
-
-import java.io.IOException;
-import java.net.URL;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.ResourceBundle;
-
-import Detail.PaymentDetail;
-
-public class Payment implements Initializable {
-	public ConnectDatabase a = new ConnectDatabase();
-	@FXML public  ComboBox<String> Day;
-	public ObservableList<String> DayList = FXCollections.observableArrayList();
+	package sample;
+	
+	import javafx.animation.Animation;
+	import javafx.animation.KeyFrame;
+	import javafx.animation.Timeline;
+	import javafx.collections.FXCollections;
+	import javafx.collections.ObservableList;
+	import javafx.event.ActionEvent;
+	import javafx.event.EventHandler;
+	import javafx.fxml.FXML;
+	import javafx.fxml.FXMLLoader;
+	import javafx.fxml.Initializable;
+	import javafx.scene.Parent;
+	import javafx.scene.Scene;
+	import javafx.scene.control.Button;
+	import javafx.scene.control.ComboBox;
+	import javafx.scene.control.Label;
+	import javafx.scene.control.TableColumn;
+	import javafx.scene.control.TableView;
+	import javafx.scene.control.cell.PropertyValueFactory;
+	import javafx.stage.Stage;
+	import javafx.util.Duration;
+	import java.io.IOException;
+	import java.net.URL;
+	import java.sql.SQLException;
+	import java.text.SimpleDateFormat;
+	import java.util.ArrayList;
+	import java.util.Calendar;
+	import java.util.Collections;
+	import java.util.LinkedHashSet;
+	import java.util.List;
+	import java.util.ResourceBundle;
+	import Detail.PaymentDetail;
+	public class Payment implements Initializable {
+		public ConnectDatabase a = new ConnectDatabase();
+		@FXML public  ComboBox<String> Day;
+		public ObservableList<String> DayList = FXCollections.observableArrayList();
 	@FXML public  ComboBox<String> Month;
 	public ObservableList<String> MonthList = FXCollections.observableArrayList();
 	@FXML public  ComboBox<String> Year;
@@ -54,9 +51,6 @@ public class Payment implements Initializable {
     @FXML  public   TableColumn<PaymentDetail,String> ServiceTime;
     @FXML  public   TableColumn<PaymentDetail,String> Price;
     @FXML  public   TableColumn<PaymentDetail,String> MassgerCost;
-  //  public static ObservableList<PaymentDetail> list = FXCollections.observableArrayList();
-    public ArrayList<String> x = new ArrayList<>();
-   
     public Payment (){
     	dynamicdate();
     } 
@@ -74,19 +68,14 @@ public class Payment implements Initializable {
     	LinkedHashSet<String> lhs = new LinkedHashSet<String>();
     	for(int i = 0 ; i<a.DS7.size();i++){
     		String[] yearAR = a.DS7.get(i).getDate().split("/");
-    		al.add(yearAR[2].trim());
-    	}
+    		al.add(yearAR[2].trim());}
     	lhs.addAll(al);
 	     al.clear();
 	     al.addAll(lhs);
 	     Collections.sort(al);
 	     YearList.addAll(al);
     	Year.setItems(YearList);
-    	System.out.println(YearList.size());
-		//TableView.setItems(a.DS7);
-	
 	}
-
     @FXML
     private Button borrow ;
     @FXML
@@ -105,14 +94,9 @@ public class Payment implements Initializable {
  		MassagerNameList.clear();
  		List<String> al = new ArrayList<String>();
  		LinkedHashSet<String> lhs = new LinkedHashSet<String>();
-    	 if(YearG == null){	 
-    		
-    	 }
-    	 else if(MonthG == null){				
-    
- 		}
+    	 if(YearG == null){	 			 }
+    	 else if(MonthG == null){					}
      	 else if(MonthG !=null &&YearG != null && DayG == null){
-     		 System.out.println("here");
      		for(int i = 0 ; i<a.DS7.size();i++){
         		String[] yearAR = a.DS7.get(i).getDate().split("/");
         		if(yearAR[2].equals(YearG)){
@@ -188,11 +172,6 @@ public class Payment implements Initializable {
 		}	
 		else {
 			int priceA = 0;
-	 		int count = 0;
-	 		 for(int i = 0 ; i<a.DS7SPECIFIC.size();i++){
-					System.out.println(a.DS7SPECIFIC.get(i).getMassagerName());
-				
-	   	}
 	 		for(int i = 0 ; i<a.DS7SPECIFIC.size();i++){
 	 			if(MassagerCB.getValue().equals(a.DS7SPECIFIC.get(i).getMassagerName())) {
 	 					a.DS7SPECIFIC1.add(new PaymentDetail(a.DS7SPECIFIC.get(i).getPaymentID(), a.DS7SPECIFIC.get(i).getCustomerName(), a.DS7SPECIFIC.get(i).getMassagerName(), 
@@ -237,13 +216,8 @@ public class Payment implements Initializable {
  		MassagerNameList.clear();
  		List<String> al = new ArrayList<String>();
  		LinkedHashSet<String> lhs = new LinkedHashSet<String>();
- 		if(Year.getValue()==null){
- 			
-			}
- 		
- 		else if(YearList.size() == 0){
-    		
-    	}
+ 		if(Year.getValue()==null){			}
+ 		else if(YearList.size() == 0){			}
   	    else {
   	 		for(int i = 0 ; i<a.DS7.size();i++){
   	 			String[] yearAR = a.DS7.get(i).getDate().split("/");
@@ -269,12 +243,8 @@ public class Payment implements Initializable {
 		MassagerNameList.clear();
 		List<String> al = new ArrayList<String>();
 		LinkedHashSet<String> lhs = new LinkedHashSet<String>();
-		if(Month.getValue()==null){
- 			
-		}
-		else if(MonthList.size() == 0){
-		
-		}
+		if(Month.getValue()==null){}
+		else if(MonthList.size() == 0){}
 	    else {
 	    	for(int i = 0 ; i<a.DS7.size();i++){
 				String[] yearAR = a.DS7.get(i).getDate().split("/");
@@ -303,10 +273,7 @@ public class Payment implements Initializable {
     public void actionToMenu(ActionEvent event){
         Button b =(Button)event.getSource();
         Stage stage = (Stage) b.getScene().getWindow();
-        //a=textField.getText();
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ui_owner.fxml"));
-        Parent root = null;
         try {
 
         	stage.setScene(new Scene((Parent) loader.load(), 498, 455));

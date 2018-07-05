@@ -1,5 +1,4 @@
 package sample;
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -19,7 +18,6 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -27,16 +25,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ResourceBundle;
-
 import javax.swing.JOptionPane;
-
 import Detail.TypeProductDetail;
-
-
 public class TypeProduct implements Initializable {
-	
 	public  TypeProduct() {
-		// TODO Auto-generated method stub
 		dynamicdate();
 	}
 	public ConnectDatabase a = new ConnectDatabase();
@@ -46,11 +38,9 @@ public class TypeProduct implements Initializable {
 	    @FXML  public   TableColumn<TypeProductDetail,Boolean> Check;
 	    @FXML  public   TableColumn<TypeProductDetail,String> TypeProductID;
 	    @FXML  public   TableColumn<TypeProductDetail,String> TypeProductName;
-	  //  public static ObservableList<TypeProductDetail> list = FXCollections.observableArrayList();
 	    public ArrayList<String> x = new ArrayList<>();
 	    @Override
 	    public void initialize(URL location, ResourceBundle resources){
-	    	System.out.println("sss");
 	    	Check.setCellValueFactory(new PropertyValueFactory<TypeProductDetail,Boolean>("Check"));
 	    	Check.setCellFactory(CheckBoxTableCell.forTableColumn(Check));
 	    	TypeProductID.setCellValueFactory(new PropertyValueFactory<TypeProductDetail,String>("TypeProductID"));
@@ -63,13 +53,11 @@ public class TypeProduct implements Initializable {
 	    	int check= 0;
 	    	int count = a.DS9.size()+1;
 	    	int checkDoM = 0;
-	    	int checkDoM1 = 0;
-	         String PTName = text1.getText();
+	    	String PTName = text1.getText();
 	    	if(text1.getText().equals("")){
 	    		JOptionPane.showMessageDialog(null,"Please Fill Product type Name");
 	    	}
 	    	else{
-	    		String PhoneDB ="";
 	    		for (int i = 0 ; i<a.DS9.size();i++ ){
 	   	        	 if (PTName.equals(a.DS9.get(i).getTypeProductName())){
 	   	        		check =1;
@@ -87,89 +75,62 @@ public class TypeProduct implements Initializable {
 	    		 	a.getNewSetProduct();
 	    		 	TableView.setItems(a.DS9);
 	    		 	JOptionPane.showMessageDialog(null,"Add Type Product Name Success");
-				}
-				 
+				}			 
 			}
 			 else if (check == 1){
-			 		/*if (Phone.equals(PhoneDB)){
-			 			JOptionPane.showMessageDialog(null,"This number is the same number as the original.");
-			 		}
-			 		else if(phoneCheck !=9 & phoneCheck != 10){
-			    		JOptionPane.showMessageDialog(null,"Phone need 9-10 digit Only");
-			    	}
-					else if(checkDoM1 >=1){
-			    		JOptionPane.showMessageDialog(null,"Can use digit only ");
-			    	}
-			 		else if (!Phone.equals(PhoneDB)){
-			 			System.out.println("P4");
-			 			 a.MassagerD.clear();
-						 a.DS1.clear();
-						 a.deleteMassager(Massager_ID);
-					     a.insertMassager(Massager_ID, Massager_Name, Phone);
-			 			 a.getNewSetTableMassager();
-			 			 TableView.setItems(a.DS1);
-			 			JOptionPane.showMessageDialog(null,"Update Phone Success");
-
-			 		}*/
 				 JOptionPane.showMessageDialog(null,"Product type already have detail.");
 			 			 
 			 	}
 	    	
 			 checkDoM = 0;
-	    	 checkDoM1 = 0;
 	    	}
 	    }
     @FXML
     private Button add ;
     @FXML
     private Button logout ;
-    public int checkDigit() {
-    	int checkDoM = 0;
-			String[] ae = text1.getText().split("");
-			for(int i = 0 ; i < ae.length ;i++){
-	    	      char c = text1.getText().charAt(i);
-	    	      if(Character.isDigit(c)){
-	    	    	 checkDoM = checkDoM+1;
-	    	    	System.out.println(checkDoM+"oh1");
-	    	       }
-	    	      else if(ae[i].equals("\"")){
-	    	    	 checkDoM = checkDoM+1;
-	    	    	System.out.println(checkDoM+"oh2");
-	    	      }
-	    	     else if(ae[i].equals("'")){
-	    	    	 checkDoM = checkDoM+1;
-	    	    	System.out.println(checkDoM+"oh3");
-	    	      }
-	    	    else if(ae[i].equals(".")){
-	    	    	 checkDoM = checkDoM+1;
-	    	    	System.out.println(checkDoM+"oh3");
-	    	      }
-	    	    else if(ae[i].equals("-")){
-	    	    	 checkDoM = checkDoM+1;
-	    	    	System.out.println(checkDoM+"oh3");
-	    	      }
-			}
-	     return checkDoM;
-    }
-    @FXML
-    public void actionButtonCanceled(ActionEvent event) throws ClassNotFoundException, SQLException{
-    	int count = 0;
-    	if(text1.getText().equals("")){
-    		JOptionPane.showMessageDialog(null,"Please Fill Product type Name");
-    	}
-    	 for (TypeProductDetail p : TableView.getItems()) {
-    		 		if(p.isCheck()==true ){
-    		 			int checkDom =checkDigit();
-    		 			if(checkDom>0){
-    			    		count=1;
-    			    	}
-    		 			else {
-	                     a.updateProductType(p.getTypeProductID(),text1.getText()) ;
-	                     count=2;
-	                     
-    		 			}
-    		 		}
-         }
+	    public int checkDigit() {
+	    	int checkDoM = 0;
+				String[] ae = text1.getText().split("");
+				for(int i = 0 ; i < ae.length ;i++){
+		    	      char c = text1.getText().charAt(i);
+		    	      if(Character.isDigit(c)){
+		    	    	 checkDoM = checkDoM+1;
+		    	       }
+		    	      else if(ae[i].equals("\"")){
+		    	    	 checkDoM = checkDoM+1;
+		    	      }
+		    	     else if(ae[i].equals("'")){
+		    	    	 checkDoM = checkDoM+1;
+		    	      }
+		    	    else if(ae[i].equals(".")){
+		    	    	 checkDoM = checkDoM+1;
+		    	      }
+		    	    else if(ae[i].equals("-")){
+		    	    	 checkDoM = checkDoM+1;
+		    	      }
+				}
+		     return checkDoM;
+	    }
+	    @FXML
+	    public void actionButtonCanceled(ActionEvent event) throws ClassNotFoundException, SQLException{
+	    	int count = 0;
+	    	if(text1.getText().equals("")){
+	    		JOptionPane.showMessageDialog(null,"Please Fill Product type Name");
+	    	}
+	    	 for (TypeProductDetail p : TableView.getItems()) {
+	    		 		if(p.isCheck()==true ){
+	    		 			int checkDom =checkDigit();
+	    		 			if(checkDom>0){
+	    			    		count=1;
+	    			    	}
+	    		 			else {
+		                     a.updateProductType(p.getTypeProductID(),text1.getText()) ;
+		                     count=2;
+		                     
+	    		 			}
+	    		 		}
+	         }
     	 if(count == 0) {
     		 JOptionPane.showMessageDialog(null,"Please choose TypeProduct");
     	 
@@ -182,18 +143,13 @@ public class TypeProduct implements Initializable {
     		 a.getNewSetProduct();
         	 TableView.setItems(a.DS9);
     	 }
-    	 
     }
     @FXML
     public void actionToMenu(ActionEvent event){
         Button b =(Button)event.getSource();
         Stage stage = (Stage) b.getScene().getWindow();
-        //a=textField.getText();
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ui_owner.fxml"));
-        Parent root = null;
         try {
-
         	stage.setScene(new Scene((Parent) loader.load(),  498, 455));
             stage.setTitle("๏SenseAroma๏");
             stage.show();

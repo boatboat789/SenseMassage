@@ -1,5 +1,4 @@
 package sample;
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -13,11 +12,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-
 public class Owner  {
     @FXML
     private Button borrow ;
@@ -29,20 +26,15 @@ public class Owner  {
     private Button logout ;
     public  Owner() {
     	dynamicdate();
-		// TODO Auto-generated constructor stub
 	}
     @FXML
     public void actionlogout(ActionEvent event){
         Button b =(Button)event.getSource();
         Stage stage = (Stage) b.getScene().getWindow();
-        //a=textField.getText();
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ui1.fxml"));
-        Parent root = null;
         try {
-
             stage.setScene(new Scene((Parent) loader.load(), 361, 250));
-            stage.setTitle("Seat");
+            stage.setTitle("๏SenseAroma๏");
             stage.show();
         } catch (IOException e1) {
             e1.printStackTrace();
@@ -53,14 +45,10 @@ public class Owner  {
     public void actionToCourse(ActionEvent event){
         Button b =(Button)event.getSource();
         Stage stage = (Stage) b.getScene().getWindow();
-        //a=textField.getText();
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ui_course.fxml"));
-        Parent root = null;
         try {
-
             stage.setScene(new Scene((Parent) loader.load(), 684, 531));
-            stage.setTitle("Seat");
+            stage.setTitle("๏SenseAroma๏");
             stage.show();
         } catch (IOException e1) {
             e1.printStackTrace();
@@ -71,14 +59,10 @@ public class Owner  {
     public void actionToScchedule(ActionEvent event){
         Button b =(Button)event.getSource();
         Stage stage = (Stage) b.getScene().getWindow();
-        //a=textField.getText();
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ui_schedule.fxml"));
-        Parent root = null;
         try {
-
             stage.setScene(new Scene((Parent) loader.load(), 684, 531));
-            stage.setTitle("Seat");
+            stage.setTitle("๏SenseAroma๏");
             stage.show();
         } catch (IOException e1) {
             e1.printStackTrace();
@@ -89,14 +73,10 @@ public class Owner  {
     public void actionToMassager(ActionEvent event){
         Button b =(Button)event.getSource();
         Stage stage = (Stage) b.getScene().getWindow();
-        //a=textField.getText();
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ui_massager.fxml"));
-        Parent root = null;
         try {
-
             stage.setScene(new Scene((Parent) loader.load(), 684, 531));
-            stage.setTitle("Seat");
+            stage.setTitle("๏SenseAroma๏");
             stage.show();
         } catch (IOException e1) {
             e1.printStackTrace();
@@ -106,14 +86,10 @@ public class Owner  {
     public void actionToSkill(ActionEvent event){
         Button b =(Button)event.getSource();
         Stage stage = (Stage) b.getScene().getWindow();
-        //a=textField.getText();
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ui_skill.fxml"));
-        Parent root = null;
         try {
-
             stage.setScene(new Scene((Parent) loader.load(), 684, 531));
-            stage.setTitle("Seat");
+            stage.setTitle("๏SenseAroma๏");
             stage.show();
         } catch (IOException e1) {
             e1.printStackTrace();
@@ -123,14 +99,10 @@ public class Owner  {
     public void actionToReport(ActionEvent event){
         Button b =(Button)event.getSource();
         Stage stage = (Stage) b.getScene().getWindow();
-        //a=textField.getText();
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ui_report.fxml"));
-        Parent root = null;
         try {
-
-            stage.setScene(new Scene((Parent) loader.load(), 684, 531));
-            stage.setTitle("Seat");
+           stage.setScene(new Scene((Parent) loader.load(), 684, 531));
+            stage.setTitle("๏SenseAroma๏");
             stage.show();	
         } catch (IOException e1) {
             e1.printStackTrace();
@@ -140,14 +112,10 @@ public class Owner  {
     public void actionToProduct(ActionEvent event){
         Button b =(Button)event.getSource();
         Stage stage = (Stage) b.getScene().getWindow();
-        //a=textField.getText();
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Product.fxml"));
-        Parent root = null;
         try {
-
             stage.setScene(new Scene((Parent) loader.load(), 684, 531));
-            stage.setTitle("Seat");
+            stage.setTitle("๏SenseAroma๏");
             stage.show();	
         } catch (IOException e1) {
             e1.printStackTrace();
@@ -157,14 +125,10 @@ public class Owner  {
     public void actionToTypeProduct(ActionEvent event){
         Button b =(Button)event.getSource();
         Stage stage = (Stage) b.getScene().getWindow();
-        //a=textField.getText();
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("TypeProduct.fxml"));
-        Parent root = null;
         try {
-
             stage.setScene(new Scene((Parent) loader.load(), 684, 531));
-            stage.setTitle("Seat");
+            stage.setTitle("๏SenseAroma๏");
             stage.show();	
         } catch (IOException e1) {
             e1.printStackTrace();
@@ -174,14 +138,11 @@ public class Owner  {
     public void actionToManagement(ActionEvent event){
         Button b =(Button)event.getSource();
         Stage stage = (Stage) b.getScene().getWindow();
-        //a=textField.getText();
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Management.fxml"));
-        Parent root = null;
         try {
 
             stage.setScene(new Scene((Parent) loader.load(), 684, 531));
-            stage.setTitle("Seat");
+            stage.setTitle("๏SenseAroma๏");
             stage.show();	
         } catch (IOException e1) {
             e1.printStackTrace();

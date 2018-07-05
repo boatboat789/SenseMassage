@@ -1,5 +1,4 @@
 package sample;
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -15,37 +14,24 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.swing.JOptionPane;
-
 public class Login {
-
     @FXML	
     private TextField username;
     @FXML
     private PasswordField password;
     @FXML
     private Button buttonlogin;
-    
-    public Login() {
-		// TODO Auto-generated constructor stub
-    
-	}
+    public Login() {}
     @FXML
     public void actionlogin(ActionEvent event){
-
         Button b =(Button)event.getSource();
         Stage stage = (Stage) b.getScene().getWindow();
-        if(username.getText().equals("a") && password.getText().equals("a")){
+        if(username.getText().equals("Owner") && password.getText().equals("Owner")){
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ui_owner.fxml"));
-            Parent root = null;
             try {
                 stage.setScene(new Scene((Parent) loader.load(), 498, 455));
                 stage.setTitle("๏SenseAroma๏");
@@ -55,15 +41,11 @@ public class Login {
                 e1.printStackTrace();
             }
         }
-        else if(username.getText().equals("b")&& password.getText().equals("b")){
-
+        else if(username.getText().equals("Personel")&& password.getText().equals("Personel")){
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ui_personnel.fxml"));
-            Parent root = null;
             try {
-
                 stage.setScene(new Scene((Parent) loader.load(),  498, 389));
                 stage.setTitle("๏SenseAroma๏");
-
                 stage.show();
             } catch (IOException e1) {
                 e1.printStackTrace();
@@ -72,7 +54,6 @@ public class Login {
         else {
         	JOptionPane.showMessageDialog(null,"ID or Password fail ");
         }
-
         }
     @FXML
     private Label labell ;

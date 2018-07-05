@@ -1,52 +1,28 @@
 package Detail;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
 public class ProductPaymentDetail {
-	private  BooleanProperty Check;
-	private final SimpleStringProperty PaymentID ;
-	private final SimpleStringProperty MassagerName ;
-	private final SimpleStringProperty CourseName ;
-	private final SimpleStringProperty Time ;
-	private final SimpleStringProperty ProductName ;
-	private final SimpleStringProperty Quantity ;
-	private final SimpleStringProperty DateTime ;
-	public ProductPaymentDetail(String PaymentID ,String MassagerName,String CourseName , String Time, String ProductName, String Quantity,String DateTime) {
-		this.Check = new SimpleBooleanProperty(false);
-		this.PaymentID= new SimpleStringProperty(PaymentID);
-		this.MassagerName= new SimpleStringProperty(MassagerName);
-		this.CourseName= new SimpleStringProperty(CourseName);
-		this.Time= new SimpleStringProperty(Time);
-		this.ProductName= new SimpleStringProperty(ProductName);
-		this.DateTime= new SimpleStringProperty(DateTime);
-		this.Quantity= new SimpleStringProperty(Quantity);
+	private  BooleanProperty Check1;
+	private  String ProductName ;
+	private String Quantity ;
+	public ProductPaymentDetail(String ProductName ,String Quantity) {
+		this.Check1 = new SimpleBooleanProperty(false);
+		this.ProductName= ProductName;
+		this.Quantity= Quantity;
 	}
-	public boolean isCheck() {
-        return Check.get();
+	public boolean isCheck1() {
+        return Check1.get();
     }
-    public BooleanProperty CheckProperty() {
-        return Check;
+    public BooleanProperty Check1Property() {
+        return Check1;
     }
-	public String getPaymentID() {
-		return PaymentID.get();
-	}
-	public String getMassagerName() {
-		return MassagerName.get();
-		
-	}
-	public String getCourseName() {
-		return CourseName.get();
-	}
-	public String getTime() {
-		return Time.get();		
-	}
 	public String getProductName() {
-		return ProductName.get();	
-	}
-	public String getDateTime() {
-		return DateTime.get();	
+		return ProductName;	
 	}
 	public String getQuantity() {
-		return Quantity.get();		
+		return Quantity;		
+	}	
+	public void setQuantity(String Quantity) {
+		this.Quantity = Quantity;
 	}	
 }

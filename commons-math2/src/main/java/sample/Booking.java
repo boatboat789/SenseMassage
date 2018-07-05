@@ -67,14 +67,12 @@ public class Booking implements Initializable{
 	@FXML public   TableColumn<BookingDetail,String> Status;
 	public int Endday = 24 ;
 	public int Minute = 60 ;
-	  //  public static ObservableList<BookingDetail> list = FXCollections.observableArrayList();
 	public ObservableList<String> timeHD = FXCollections.observableArrayList();
 	public ObservableList<String> timeMD = FXCollections.observableArrayList();
 	public  Booking() {
 		dynamicdate();
 	}@Override
 	public void initialize(URL location, ResourceBundle resources){
-		System.out.println("sss");
 		Check.setCellValueFactory(new PropertyValueFactory<BookingDetail,Boolean>("Check"));
 		Check.setCellFactory(CheckBoxTableCell.forTableColumn(Check));
 		No.setCellValueFactory(new PropertyValueFactory<BookingDetail,String>("No"));
@@ -85,7 +83,7 @@ public class Booking implements Initializable{
 		TimeBegin.setCellValueFactory(new PropertyValueFactory<BookingDetail,String>("TimeBegin"));
 		TimeEnd.setCellValueFactory(new PropertyValueFactory<BookingDetail,String>("TimeEnd"));	
 		Status.setCellValueFactory(new PropertyValueFactory<BookingDetail,String>("Status"));
-		TableView.setItems(a.DS4);
+		TableView.setItems(a.DS4Booking);
 		cusName.setItems(a.CustomerD);	
 		TableView.setEditable(true);
 		timeHD.clear();
@@ -141,7 +139,6 @@ public class Booking implements Initializable{
 	    }   
 	 }
 	public void  getTimeMin() {
-
 		 String CourseName = corName.getValue();
 		 String TimeService = timeSer.getValue();
 		 for (CorseDetail c : a.DS){
@@ -156,15 +153,9 @@ public class Booking implements Initializable{
    		SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
    		Calendar cal = Calendar.getInstance();
    		String Date = format1.format(cal.getTime());
-   		System.out.println("DATE :   "+ Date);
-    	if(a.DS4.size()==0){
-    		No = "0" ;
-    	}
-    	else{
-    		No = a.DS4.get(a.DS4.size()-1).getNo();
-    	}
+    	if(a.DS4Booking.size()==0){	No = "0" ;}
+    	else{No = a.DS4.get(a.DS4.size()-1).getNo();	}
     	 No = Integer.toString(Integer.parseInt(No)+1);
-    	 System.out.println("click");
     	 String CustomerName = cusName.getValue();
     	 String CourseName = corName.getValue();
     	 String MassagerName= masName.getValue();
@@ -244,9 +235,9 @@ public class Booking implements Initializable{
         	  nTH =Integer.parseInt(timeHour)+Integer.parseInt(x[0]);
         	  nTM =Integer.parseInt(timeMinute);
        		}
-       		for (int x1 = 0 ; x1< a.DS4.size();x1++){
- 				if(MassagerName.equals(a.DS4.get(x1).getMassagerName())){
- 					String[] t1 = a.DS4.get(x1).getTimeBegin().split(":");
+       		for (int x1 = 0 ; x1< a.DS4Booking.size();x1++){
+ 				if(MassagerName.equals(a.DS4Booking.get(x1).getMassagerName())){
+ 					String[] t1 = a.DS4Booking.get(x1).getTimeBegin().split(":");
  					String[] t2 = a.DS4.get(x1).getTimeEnd().split(":");
  					if(Integer.parseInt(timeHour) == Integer.parseInt(t1[0])){
  						check0=1;
@@ -289,7 +280,7 @@ public class Booking implements Initializable{
        			String Status = "Booking";
 			     a.insertBooking(No ,  CustomerID, CourseID ,  TimeService, TimeBegin, TimeEnd, Date ,  MassagerID,Status,price);
 			     a.getNewSetTableBooking();
-			     TableView.setItems(a.DS4);
+			     TableView.setItems(a.DS4Booking);
 			     JOptionPane.showMessageDialog(null,"Booking Successs");
        		}
        		else if (check0==1){
@@ -321,10 +312,6 @@ public class Booking implements Initializable{
     	al.clear();
     	lhs.clear();
     	 String CustomerName = cusName.getValue();
-    	 int check = 0;
-    	Calendar cal = Calendar.getInstance();
-  	    SimpleDateFormat sdf = new SimpleDateFormat("HH");
-  	    int getTim = Integer.parseInt(sdf.format(cal.getTime()));
   	    PrivateMassager = " ";	
   		PricesOut.setText("");
  		 int itemCount = MassagerNameCB.size()  ;
@@ -344,103 +331,6 @@ public class Booking implements Initializable{
     			PrivateMassager = a.DS3.get(i).getMassager_Name();
     		}
     	}
-  	    if(getTim < 13){
-  	    	//add SPECIFIC MASSSGER
-  	    for (int i = 0 ;i < a.DS6.size();i++){
-  	    	if(check == 1){
-	   			}
-  	   		else if(PrivateMassager.equals(a.DS6.get(i).getMassager_Name())){
-  	   	  	   	check =1;	  	   	
-  	   			al.add(PrivateMassager); 
-	    	}
-  	   	}
-  	    	for (int i = 0 ;i < a.DS2CHECKONLY.size();i++){
-  	    		if(PrivateMassager.equals(a.DS2CHECKONLY.get(i).getMassager_Name())){
-  	    			String[] t1 = a.DS2CHECKONLY.get(i).getDay().split(":");
-  	    			int less = Integer.parseInt(t1[0]);
-  	    			if(check == 1){	}
-  	    			else if(less>=13){
-  	    				check = 1;
-  	    				al.add(PrivateMassager);
-  	    			}
-  	    		}
-  	    	}
-  	  	   //add who work 13:00 - 24:00
-  	    	for (int i = 0 ;i < a.DS2CHECKONLY.size();i++){
-  	    			String[] t0 = a.DS2CHECKONLY.get(i).getDay().split("-");
-  	    			String[] t1 = t0[0].split(":");
-  	    			int less = Integer.parseInt(t1[0]);
-  	    			if(PrivateMassager.equals(a.DS2CHECKONLY.get(i).getMassager_Name())){
-  	    			}
-  	    			else if(less >=13 && less< 19){	
-  	    				al.add(a.DS2CHECKONLY.get(i).getMassager_Name());
-  	    			}		
-  	    	}
-  	    //add OTHER MASSSGER WHO LOGIN
-  	    	for (int i = 0 ;i < a.DS6.size();i++){
-	    		if(PrivateMassager.equals(a.DS6.get(i).getMassager_Name())){	}
-	    		else {
-	    			al.add(a.DS6.get(i).getMassager_Name());
-	    		}
-	    	}
-  	    }
-  	    else if(getTim <19){  	
-  	    	//add SPECIFIC MASSSGER
-  	    	for (int i = 0 ;i < a.DS6.size();i++){
-  	    		if(check == 1){	}
-  	    		else if(PrivateMassager.equals(a.DS6.get(i).getMassager_Name())){
-  	    			check = 1;
-  	    			al.add(PrivateMassager); 
-  	    		}
-  	    	}
-  	    //CHECK TIME SPECIFIC MASSSGER
-  	    	for (int i = 0 ;i < a.DS2CHECKONLY.size();i++){
-  	    		if(PrivateMassager.equals(a.DS2CHECKONLY.get(i).getMassager_Name())){
-  	    			String[] t1 = a.DS2CHECKONLY.get(i).getDay().split(":");
-  	    			int less = Integer.parseInt(t1[0]);
-  	    			if(check == 1){}
-  	    			else if(less>=19){
-  	    				check = 1;
-  	    				al.add(PrivateMassager);
-  	    			}
-  	    		}
-  	    	}
-  	    //add who work 19:00 - 24:00
-  	    	for (int i = 0 ;i < a.DS2CHECKONLY.size();i++){
-  	    			String[] t0 = a.DS2CHECKONLY.get(i).getDay().split("-");
-  	    			String[] t1 = t0[0].split(":");
-  	    			int less = Integer.parseInt(t1[0]);
-  	    			if(PrivateMassager.equals(a.DS2CHECKONLY.get(i).getMassager_Name())){
-  	    			}
-  	    			else if(less >=19){	
-  	    				al.add(a.DS2CHECKONLY.get(i).getMassager_Name());
-  	    			}  	    			
-  	    	}
-  	    //add OTHER MASSSGER WHO LOGIN
-  	    	for (int i = 0 ;i < a.DS6.size();i++){ 	    		
-	    		if(PrivateMassager.equals(a.DS6.get(i).getMassager_Name())){
-	    		}
-	    		else {	    			
-	    			al.add(a.DS6.get(i).getMassager_Name());
-	    		}
-	    	}
-  	    }
-  	    else if (getTim <24){
-  	    	//add SPECIFIC MASSSGER
-  	    	for (int i = 0 ;i < a.DS6.size();i++){
-  	    		if(PrivateMassager.equals(a.DS6.get(i).getMassager_Name())){
-  	    			al.add(PrivateMassager);	
-  	    		}
-  	    	}
-  	    //add OTHER MASSSGER WHO LOGIN
-  	    	for (int i = 0 ;i < a.DS6.size();i++){
-	    		if(PrivateMassager.equals(a.DS6.get(i).getMassager_Name())){
-	    		}
-	    		else {
-	    			al.add(a.DS6.get(i).getMassager_Name());	
-	    		}
-	    	} 	    	
-  	    }
   	    if(corName.getValue() == null){
     		 lhs.addAll(al);
 		     al.clear();
@@ -467,9 +357,9 @@ public class Booking implements Initializable{
     	ObservableList<String> MassagerNameCB1 = FXCollections.observableArrayList();
     	int check = 0;
     	 //add SPECIFIC MASSSGER
-  	   	for (int i = 0 ;i < a.DS6.size();i++){
-	  	    if(PrivateMassager.equals(a.DS6.get(i).getMassager_Name())){
-	  	    	String[] t0 = a.DS6.get(i).getTimeIn().split(":");
+  	   	for (int i = 0 ;i < a.DS6Present.size();i++){
+	  	    if(PrivateMassager.equals(a.DS6Present.get(i).getMassager_Name())){
+	  	    	String[] t0 = a.DS6Present.get(i).getTimeIn().split(":");
 	  	    	int less = Integer.parseInt(t0[0]);
 	  	    	if( less <13){
 	  	    		less = 13;
@@ -488,9 +378,9 @@ public class Booking implements Initializable{
 	  	   		}
   	    	}
   	   		//add specific
-  	   		for (int i = 0 ;i < a.DS2CHECKONLY.size();i++){
-	 	    	if(PrivateMassager.equals(a.DS2CHECKONLY.get(i).getMassager_Name())){
-	  	    		String[] t0 = a.DS2CHECKONLY.get(i).getDay().split("-");
+  	   		for (int i = 0 ;i < a.DS2.size();i++){
+	 	    	if(PrivateMassager.equals(a.DS2.get(i).getMassager_Name())){
+	  	    		String[] t0 = a.DS2.get(i).getDay().split("-");
 	  	   			String[] t1 = t0[1].split(":");
 	  	   			String[] t2 = t0[0].split(":");
 	  	   			int less = Integer.parseInt(t1[0]);
@@ -504,9 +394,9 @@ public class Booking implements Initializable{
   	    	}
   	    //add who work >get tim
   	    	for (int i = 0 ;i < MassagerNameCB.size();i++){
-  	    		for (int i1 = 0 ;i1 < a.DS2CHECKONLY.size();i1++){
-	  	    		if(MassagerNameCB.get(i).equals(a.DS2CHECKONLY.get(i1).getMassager_Name())){
-	  	    			String[] t0 = a.DS2CHECKONLY.get(i1).getDay().split("-");
+  	    		for (int i1 = 0 ;i1 < a.DS2.size();i1++){
+	  	    		if(MassagerNameCB.get(i).equals(a.DS2.get(i1).getMassager_Name())){
+	  	    			String[] t0 = a.DS2.get(i1).getDay().split("-");
 	  	    			String[] t1 = t0[1].split(":");
 	  	    			String[] t2 = t0[0].split(":");
 	  	    			int less = Integer.parseInt(t1[0]);
@@ -522,26 +412,23 @@ public class Booking implements Initializable{
   	    	}
   	    //add who work >get tim
   	    	for (int i = 0 ;i < MassagerNameCB.size();i++){
-  	    		for (int i1 = 0 ;i1 < a.DS2CHECKONLY.size();i1++){
-	  	    		if(MassagerNameCB.get(i).equals(a.DS2CHECKONLY.get(i1).getMassager_Name())){
-	  	    			String[] t0 = a.DS2CHECKONLY.get(i1).getDay().split("-");
+  	    		for (int i1 = 0 ;i1 < a.DS2.size();i1++){
+	  	    		if(MassagerNameCB.get(i).equals(a.DS2.get(i1).getMassager_Name())){
+	  	    			String[] t0 = a.DS2.get(i1).getDay().split("-");
 	  	    			String[] t1 = t0[1].split(":");
 	  	    			String[] t2 = t0[0].split(":");
 	  	    			int less = Integer.parseInt(t1[0]);
 	  	    			int less1 = Integer.parseInt(t2[0]);
-	  	    			if(getTim > less){
-	  	    				
+	  	    			if(getTim > less){	
 	  	    			}
 	  	    			else if(less1 <= getTim &&getTim<=less){
-	  	    				System.out.println("-------------"+MassagerNameCB.get(i));
 	  	    				al.add(MassagerNameCB.get(i));
 	  	    			}
 	  	    		}
   	    		}
   	    	}
-  	    	//add OTHER MASSSGER WHO LOGIN
-  	    	for (int i = 0 ;i < a.DS6.size();i++){
-  	    		al.add(a.DS6.get(i).getMassager_Name());	
+  	    	for (int i = 0 ;i < a.DS6Present.size();i++){
+  	    		al.add(a.DS6Present.get(i).getMassager_Name());	
 	    	}
   	    	lhs.addAll(al);
   	    	al.clear();
@@ -553,12 +440,8 @@ public class Booking implements Initializable{
     }
     @FXML
     public void actionCourse() throws ClassNotFoundException, SQLException{	
-    	if(corName == null){
-    		System.out.println("Pick la");
-    	}
-    	else if(CourseNameCB.size() == 0){
-    		
-    	}
+    	if(corName == null){}
+    	else if(CourseNameCB.size() == 0){}
     	else{
     		String CID = null ;
     		for(int i = 0 ; i <a.DS.size();i++){
@@ -566,89 +449,46 @@ public class Booking implements Initializable{
     				 CID = a.DS.get(i).getCourse_ID();
     			}
     		}
-    		a.findServiceCourse ( CID);
+    		a.findServiceCourse (CID);
     		timeSer.setItems(a.courseTime);
 		}
     } 
-@FXML
-    public void actionPay() throws ClassNotFoundException, SQLException{	
-    	SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
-   		Calendar cal = Calendar.getInstance();
-   		String Date = format1.format(cal.getTime());
-    	 for (BookingDetail p : TableView.getItems()) {
-		 		if(p.isCheck()==true && p.getStatus().equals("CheckIn")){
-		 			String Massager_ID = "";
-		 			for (int x = 0 ; x< a.DS1.size();x++){
-						if(p.getMassagerName().equals(a.DS1.get(x).getMassager_Name())){
-							Massager_ID = a.DS1.get(x).getMassager_ID();
-						}
-					}
-		 			String MassagerCost = "";
-					String Course_ID = "" ;
-					String Price = "";
-					for (int x = 0 ; x< a.DS.size();x++){
-						if(p.getCourseName().equals(a.DS.get(x).getCourse_Name())){
-							Course_ID = a.DS.get(x).getCourse_ID();
-							if(p.getTimeService().equals(a.DS.get(x).getTime())){
-								Price = a.DS.get(x).getPrice();
-							}
-						}
-					}
-					String Customer_ID = "" ;
-					for (int x = 0 ; x< a.DS3.size();x++){
-						if(p.getCustomerName().equals(a.DS3.get(x).getCustomer_Name())){
-							Customer_ID = a.DS3.get(x).getCustomer_ID();
-						}
-					}
-					for (int x = 0 ; x< a.DS.size();x++){
-						if(Course_ID.equals(a.DS.get(x).getCourse_ID())&&a.DS.get(x).getTime().equals(p.getTimeService())){
-							MassagerCost = a.DS.get(x).getMassagerCost();
-						}
-					}
-					int No = 0;
-					if(a.DS7.size()==0){
-						No =1;
-					}
-					else {
-						No =a.DS7.size()+1;
-					}
-					 if (Customer_ID.equals("")){
-						 Customer_ID = "Customer";
-			            }
-					String PaymentID = Integer.toString(No);
-	                  a.deleteBooking(p.getNo()) ;
-	                  a.insertPayment(PaymentID,Customer_ID, Massager_ID, Course_ID, p.getTimeService(), Price,Date,MassagerCost);
-	                  JOptionPane.showMessageDialog(null,"This service costs   "+ Price+ "  Baths.");
-			 		}
-		 		else if (p.isCheck()==true && p.getStatus().equals("Booking")){
-		 			JOptionPane.showMessageDialog(null,"This service cant pay because Customer did not CheckIn");
-		 		}
-    	 	}
-    	 a.getNewSetTableBooking();
-    	 TableView.setItems(a.DS4);
-    }
+    @FXML
+    public void actionButtonHistory(ActionEvent event) throws ClassNotFoundException, SQLException{	
+    	 Button b =(Button)event.getSource();
+         Stage stage = (Stage) b.getScene().getWindow();
+         FXMLLoader loader = new FXMLLoader(getClass().getResource("ui_bookingH.fxml"));
+         try {
+         	stage.setScene(new Scene((Parent) loader.load(), 684, 531));
+             stage.setTitle("๏SenseAroma๏");
+             stage.show();
+         } catch (IOException e1) {
+             e1.printStackTrace();
+         }
+    } 
+
     @FXML
     public void actionButtonCanceled(ActionEvent event) throws ClassNotFoundException, SQLException{
     	 for (BookingDetail p : TableView.getItems()) {
     		 	if(p.isCheck()==true && p.getStatus().equals("Booking")){
-	               a.deleteBooking(p.getNo()) ;
-	               JOptionPane.showMessageDialog(null,"Remove booking success.");
+    		 		a.updateBooking(p.getNo() ,"Cancled");
+	               JOptionPane.showMessageDialog(null,"Cancled booking success.");
     			}
     		 	else if (p.isCheck()==true && p.getStatus().equals("CheckIn")){
     		 		JOptionPane.showMessageDialog(null,"This service cant remove because customer already CheckIn.");
     			}
          }
     	 a.getNewSetTableBooking();
-    	 TableView.setItems(a.DS4);
+    	 TableView.setItems(a.DS4Booking);
     }
     @FXML
     public void actionMassager(ActionEvent event) throws ClassNotFoundException, SQLException{
     	CourseNameCB.clear();
     	if(corName == null){
-    		System.out.println("Pick la");
+    	
     	}
     	else if(masName.getValue() == null){
-    		System.out.println("Pick la");
+
     	}
     	else{
     		for(int i = 0 ; i <a.DS5CHECKONLY.size();i++){
@@ -673,18 +513,14 @@ public class Booking implements Initializable{
     		 		}
          }
     	 a.getNewSetTableBooking();
-    	 TableView.setItems(a.DS4);
+    	 TableView.setItems(a.DS4Booking);
     }
     @FXML
     public void actionlogout(ActionEvent event){
         Button b =(Button)event.getSource();
         Stage stage = (Stage) b.getScene().getWindow();
-        //a=textField.getText();
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ui_personnel.fxml"));
-        Parent root = null;
         try {
-
         	stage.setScene(new Scene((Parent) loader.load(), 498, 389));
             stage.setTitle("๏SenseAroma๏");
             stage.show();
